@@ -54,6 +54,8 @@ Date: 21 Nov 2026 · Status of v1: M1 (parser), M2 (demo chat generator), M3 (st
 | D44 | The anonymizer scrambles content, keeps structure, and refuses to write a sample that parses differently | Decided (M6) |
 | D45 | Redesign for simplicity, chosen by a three-way design arena: one path, five highlights, a one-idea poster, receipts one level deeper | Decided (after M6), supersedes D4, D39, D41 and the M5 poster |
 | D46 | The words live in the front end (`facts.js`); the core sends numbers. The poster's bars are the real messages | Decided (after M6) |
+| D47 | A consistency pass against Apple's design guidance: 18 fixes, two of them guarded by tests | Decided |
+| D48 | More to show, chosen by a second arena: a sixth highlight (your words) and four cards to keep (poster, words, cast, hour) | Decided |
 
 Deferred on purpose: see the last section.
 
@@ -436,6 +438,30 @@ So WebAssembly is about 2× slower than native, and the browser matches Node. Re
 **Why.** The copy needed to change faster than a wheel rebuild, and it needed the names typed on the names screen. Keeping it in one pure module means it is unit-tested against the demo couple: the five facts and their order, every backup, the twist only when true, no decimal, score or old verdict label anywhere, typed names everywhere except inside real quotes.
 
 **Cost.** Two copy systems exist until the core's is removed. Message lengths are a little more of the chat in the result object; it never leaves the page either.
+
+## D47. A consistency pass (Apple's design guidance)
+
+**Decision.** Every inconsistency in [design/consistency-audit.md](design/consistency-audit.md) is fixed: one left edge on the highlights (the text was 8 px off the buttons), no vertical scroll there (the footer hung below it), two corner radii (controls 14 px, surfaces 20 px, nested corners derived), one eyebrow label style instead of five, a type scale with no off-scale 14 px, tracking that depends on size only, colours only as tokens with one scrim, one press feedback, reduced motion everywhere, a dialog that arrives like a material, screen moves at the springs' tempo, one quote style, one date style in the app, one name for the demo. Things that open a sheet now look alike; "Start over", the one action that cannot be undone, moved out of the corner where "Skip" lives and asks once.
+
+**Why.** The owner asked for the inconsistencies to be found. Consistency is what makes a simple product feel trustworthy (Familiarity, Craft). The two layout bugs were measured, not guessed, and the phone browser test now fails if either comes back.
+
+## D48. More to show, chosen by a second arena
+
+**Why.** After D45 the owner said: "Now it is good, but there are too little things to show anyone... decide what to keep and what not to keep."
+
+**How it was decided.** The same arena method as D45 ([content-arena/brief.md](design/content-arena/brief.md), rubric [content-arena/rubric.md](design/content-arena/rubric.md)), from a runnable copy of the app. Three designers, each deciding keep/move/add/cut for every item the analysis computes, and building it: candidate 1 (a sixth highlight and a poster screen that becomes a set of cards: [screens](design/content-arena/candidate-1.jpg)), candidate 2 (eight highlights, each saveable: [screens](design/content-arena/candidate-2.jpg)), candidate 3 (path unchanged, a gallery of ten single-fact cards after the poster: [screens](design/content-arena/candidate-3.jpg)). The first runs of candidates 1 and 2 were lost when a session ended and to a usage limit, and were resumed. An independent judge scored them: totals 26 / 23 / 23, recommending candidate 1. My own first lean was candidate 3, for its untouched main path; the judge found two invariant breaks in it that I had missed (its words card showed "sorry, 223", apology counts the core keeps behind Spicy, and its "about 22 times as often" lines used a smoothed ratio as if exact), so I changed my pick. **A flaw in the process, stated plainly:** I left the rubric in the folder the designers read, and candidate 1 reported reading it before building. The judge, who knew this, still scored it highest on its work; the record is here so nobody has to take that on trust.
+
+**Convergence (a strong signal).** All three, independently: each person's own words as the best unused material; cut the meters, archetypes, `words.shared` and the weak rate stats; never show `words.hidden`; move the busiest hour out of the receipts; give the pet name a visible place; make extra things to keep on the poster's own paper; let anything be left off what gets shared.
+
+**Decision (base: candidate 1).** The main path gains one highlight, "Who says what" (three words each, with both counts; apologies and swear words never on it), placed fifth so "I love you" stays the ending. The poster screen becomes four cards a swipe apart with one Save button: the poster; **Words**; **Cast**, which replaces the archetypes with counted roles (each behaviour billed to whoever did it more, both numbers printed, "And introducing 'babu'"); and **Hour**. Under each card, anything on it can be left off with one tap. The receipts are grouped as your story, your cards, and everything else.
+
+**Grafted.** The **Hour** card (all 24 hours of your messages, the busiest in red, from the core's hours chart): every candidate surfaced the busiest hour, and candidates 2 and 3 drew it. From candidate 2: "affectionate messages" shown nowhere, not even in the receipts, because "Rohan 1,535, Tara 608" reads as who loves more, the verdict the love meter was cut for.
+
+**Rejected, and why.** Candidate 3's gallery of ten as a new screen (more surface than four cards, and several cards were thin number pairs). Its opt-in Spicy cards. Candidate 2's eight highlights and six-row "who does what" table (density back on the main path) and its "Rohan starts it. Tara gets the laugh." line (a verdict). Any emoji on a card (candidate 1's "sends the 😭" role: a canvas without a colour-emoji font draws a box).
+
+**Found while building it.** Tapping a card's tab and then Save at once saved the previous card, because the pager only committed its choice when the scroll ended; the choice now commits at the tap and the scroll follows (a test covers it). The hour card's first line was long enough to auto-shrink, so its two lines printed at different sizes; both are now short and parallel.
+
+**Revisit if** couples share the cards more than the poster (then the cards deserve more room), or if the words card ever shows a third person's name in lower case (D30's known gap).
 
 ---
 

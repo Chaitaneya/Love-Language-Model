@@ -24,10 +24,14 @@
         <div class="landing-text">
           <p class="wordmark">Love Language Model</p>
           <h1 id="landing-title" class="display" tabindex="-1">Your chat, made into a movie poster.</h1>
-          <p class="lede">Add a WhatsApp chat with your person. We find a few true moments in it, the kind only you two would recognise, and put them on a poster.</p>
+          <p class="lede">Add a WhatsApp chat with your person. We find a few true moments in it, the kind only you two would recognise, and make them into a poster and two cards to share.</p>
           <button class="btn btn-primary" id="go-add" type="button">Add your chat</button>
           <button class="btn btn-quiet" id="go-demo" type="button">Try it with a demo couple</button>
           <p class="privacy"><span class="lock" aria-hidden="true"></span>Your chat is read on this device and never uploaded.</p>
+          <div class="foot-links">
+            <button class="link-btn open-how" type="button" id="open-how-landing">How it works<span class="chev-up" aria-hidden="true"></span></button>
+            <a href="./licenses.txt">Licences</a>
+          </div>
         </div>
       </div>
     </section>
@@ -51,7 +55,7 @@
           <p><strong>Android:</strong> open the chat, tap ⋮, then More, Export chat, Without media.</p>
         </div>
         <p class="privacy"><span class="lock" aria-hidden="true"></span>The file is read here, on this device. Nothing is uploaded.</p>
-        <button class="btn btn-quiet" id="add-demo" type="button">No chat handy? Use the demo couple</button>
+        <button class="btn btn-quiet" id="add-demo" type="button">Try it with a demo couple</button>
       </div>
       <div class="column loading" id="add-loading" hidden aria-live="polite">
         <div class="loading-inner">
@@ -99,34 +103,30 @@
       </footer>
     </section>
 
-    <!-- 5. The poster -->
+    <!-- 5. The cards: the poster and the others, a swipe apart, with one Save button -->
     <section class="screen" id="poster" aria-labelledby="poster-title" hidden>
       <header class="bar">
         <button class="icon-btn" type="button" data-back aria-label="Back to highlights"><span class="chev" aria-hidden="true"></span></button>
-        <button class="text-btn" type="button" id="restart">Start over</button>
       </header>
       <div class="poster-layout">
-        <figure class="poster-frame">
-          <canvas id="poster-canvas" width="1080" height="1920" role="img" aria-label="Your poster"></canvas>
-        </figure>
+        <div class="cards" id="cards" role="group" aria-roledescription="carousel" aria-label="Your cards">
+          <div class="card-track" id="card-track" tabindex="0" aria-label="Your cards. Use the arrow keys to move between them."></div>
+        </div>
         <div class="poster-controls">
-          <h1 id="poster-title" class="title poster-heading" tabindex="-1">Your poster</h1>
-          <div class="segmented" id="title-choice" role="radiogroup" aria-label="Poster title"></div>
-          <div class="row">
-            <button class="btn btn-secondary" type="button" id="photo-btn">Add a photo</button>
-            <button class="btn btn-primary" type="button" id="save-btn">Save image</button>
-          </div>
+          <h1 id="poster-title" class="title poster-heading" tabindex="-1">Your cards</h1>
+          <div class="pager" id="pager" role="tablist" aria-label="Choose a card"></div>
+          <button class="btn btn-primary" type="button" id="save-btn">Save image</button>
           <input type="file" id="photo-file" accept="image/*" class="visually-hidden" tabindex="-1" aria-hidden="true">
           <p class="status" id="status" role="status"></p>
-          <button class="link-btn" type="button" id="open-receipts">How we counted all this<span class="chev-up" aria-hidden="true"></span></button>
+          <div class="card-options" id="card-options"></div>
+          <div class="links">
+            <button class="link-btn" type="button" id="open-receipts">How we counted<span class="chev-up" aria-hidden="true"></span></button>
+            <button class="link-btn open-how" type="button" id="open-how">How it works<span class="chev-up" aria-hidden="true"></span></button>
+          </div>
+          <button class="text-btn" type="button" id="restart">Start over with another chat</button>
         </div>
       </div>
     </section>
-
-    <footer class="foot-links">
-      <button type="button" id="open-how">How it works</button>
-      <a href="./licenses.txt">Licences</a>
-    </footer>
   </main>
 
   <!-- 6. One level deeper: the receipts, and how it works -->

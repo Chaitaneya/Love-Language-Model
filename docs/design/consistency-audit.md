@@ -1,5 +1,7 @@
 # Consistency audit (Apple design guidance), after the D45 redesign
 
+**Status: all 18 fixed** (decision D47). Items 1 and 2 are now guarded by the phone browser test, item 11 by the start-over test, item 16 by the unit tests.
+
 Method: read `web/src/style.css`, `index.html`, `main.js`, `reveal.js`, `sheet.js`, `poster.js` and `facts.js` end to end; measured in Chrome at 390 x 844 where a claim depended on layout. Each item names the principle it breaks. "Confirmed" means measured; the rest are read from the code.
 
 ## Layout and spacing

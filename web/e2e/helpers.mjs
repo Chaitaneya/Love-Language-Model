@@ -39,7 +39,7 @@ export async function ready(page) {
 export const canvasFingerprint = (page) => page.evaluate(async () => {
   // the poster redraws on the next animation frame after any edit, so let two frames pass first
   await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
-  const c = document.querySelector("#poster-canvas"), d = c.getContext("2d").getImageData(0, 0, c.width, c.height).data;
+  const c = document.querySelector('.card[data-card="poster"] canvas'), d = c.getContext("2d").getImageData(0, 0, c.width, c.height).data;
   let h = 0, colours = new Set();
   for (let i = 0; i < d.length; i += 4 * 211) { h = (h * 31 + d[i] + d[i + 1] * 3 + d[i + 2] * 7) >>> 0; colours.add((d[i] >> 4) * 256 + (d[i + 1] >> 4) * 16 + (d[i + 2] >> 4)); }
   return { hash: h, colours: colours.size };
@@ -54,7 +54,7 @@ export const canvasFingerprint = (page) => page.evaluate(async () => {
  */
 export const snapshot = (page, key) => page.evaluate(async (key) => {
   await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
-  const c = document.querySelector("#poster-canvas");
+  const c = document.querySelector('.card[data-card="poster"] canvas');
   (window.__snaps ??= {})[key] = c.getContext("2d").getImageData(0, 0, c.width, c.height).data;
 }, key);
 

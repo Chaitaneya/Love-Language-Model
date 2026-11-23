@@ -1,4 +1,4 @@
-// The flow: landing → add your chat → names → highlights → poster, plus two sheets one level deeper
+// The flow: landing → add your chat → names → highlights → the cards (poster, words, cast, hour), plus two sheets one level deeper
 // (how we counted; how it works). No framework: each screen is a <section> and show() swaps them.
 // Browser Back works at every step (one history entry per screen). docs/decision.md D45.
 import "./style.css";
@@ -6,8 +6,9 @@ import { createEngine } from "./engine.js";
 import { createPrivacy } from "./privacy.js";
 import { explain, dateOrderQuestion } from "./errors.js";
 import { loadFonts } from "./fonts.js";
-import { makeContext, pickFacts, posterContent, receipts, int } from "./facts.js";
-import { drawPoster, preparePhoto } from "./poster.js";
+import { makeContext, pickFacts, posterContent, wordsContent, castContent, hourContent, receipts, int } from "./facts.js";
+import { drawPoster, drawWordsCard, drawCastCard, drawHourCard, preparePhoto } from "./poster.js";
+import { createPager } from "./cards.js";
 import { createReveal } from "./reveal.js";
 import { createSheet } from "./sheet.js";
 import { reducedMotion } from "./spring.js";
@@ -25,8 +26,8 @@ const ORDER = ["landing", "add", "names", "reveal", "poster"];
 const ANALYZE = { seed: 1234, spicy: false, quotes: true };
 
 const state = {
-  result: null, summary: null, names: { A: "", B: "" }, facts: [], poster: null, title: 0, photo: null,
-  current: "landing", timings: {},
+  result: null, summary: null, names: { A: "", B: "" }, facts: [], title: 0, photo: null, photoOn: false,
+  off: new Set(), cards: [], content: {}, ctx: null, current: "landing", timings: {},
 };
 
 const $ = (id) => document.getElementById(id);
@@ -64,6 +65,7 @@ function show(name, { push = true } = {}) {
   if (from === "reveal") reveal.stop();
   if (from === "add") cancelLoading();
   if (name === "reveal") reveal.start(forward ? 0 : Math.max(0, state.facts.length - 1));
+  if (name === "poster" && forward) pager.reset(); // always arrive at the poster first
   const heading = into.querySelector('[tabindex="-1"]:not(input)');
   if (heading) heading.focus({ preventScroll: true });
   else into.querySelector("button, input")?.focus({ preventScroll: true });
@@ -193,7 +195,7 @@ function openDialog({ title, body, technical, actions = [{ label: "OK", primary:
   $("dialog-tech").hidden = !technical;
   $("dialog-pre").textContent = technical ?? "";
   $("dialog-actions").replaceChildren(...actions.map((a) => {
-    const b = el("button", a.primary ? "btn btn-primary" : "btn btn-secondary", a.label);
+    const b = el("button", a.primary ? "btn btn-primary" : a.destructive ? "btn btn-destructive" : "btn btn-secondary", a.label);
     b.type = "button";
     b.addEventListener("click", () => { dlg.close(); a.onClick?.(); });
     return b;
@@ -226,32 +228,119 @@ $("names-form").addEventListener("submit", (e) => {
 function build() {
   const c = makeContext(state.result, state.names);
   state.facts = pickFacts(c);
-  state.poster = posterContent(c);
   state.title = 0;
+  state.off = new Set();
   reveal.load(state.facts);
   state.receipts = receipts(c, state.facts);
-  renderTitleChoice();
-  redraw();
+  buildCards(c);
 }
 
 // ------------------------------------------------------------------ reveal
 const reveal = createReveal({ onDone: () => show("poster") });
 $("skip").addEventListener("click", () => show("poster"));
 
-// ------------------------------------------------------------------ poster
-const canvas = $("poster-canvas");
+// ------------------------------------------------------------------ the cards
+// The poster and three more cards, one Save button. Under the cards, what's on the one in front: tap any of
+// it to leave it off (state.off), so nothing goes into a shared image that the two of you didn't choose.
+const CARD_DEFS = [
+  { id: "poster", label: "Poster", name: "the poster", content: (c, off) => posterContent(c, off) },
+  { id: "words", label: "Words", name: "who says what", content: (c, off) => wordsContent(c, off) },
+  { id: "cast", label: "Cast", name: "the cast", content: (c, off) => castContent(c, off) },
+  { id: "hour", label: "Hour", name: "your busiest hour", content: (c, off) => hourContent(c, off) },
+];
+const pager = createPager({ onChange: () => renderOptions() });
+const canvases = {};
 
-function redraw() {
-  drawPoster(canvas, state.poster, { title: state.title, photo: state.photo });
-  const t = state.poster.titles[state.title].text;
-  canvas.setAttribute("aria-label", `Poster titled ${t}. ${state.poster.lines.join(" ")}`);
+function buildCards(c) {
+  state.ctx = c;
+  state.cards = CARD_DEFS.filter((d) => d.content(c, state.off));
+  const list = pager.load(state.cards);
+  state.cards.forEach((d, i) => { canvases[d.id] = list[i]; });
+  state.cards.forEach((d) => drawCard(d.id));
+  renderOptions();
 }
 
-function renderTitleChoice() {
-  const group = $("title-choice");
-  const buttons = state.poster.titles.map((t, i) => {
+const currentCard = () => state.cards[pager.index] ?? state.cards[0];
+
+function drawCard(id) {
+  const def = state.cards.find((d) => d.id === id);
+  const canvas = canvases[id];
+  if (!def || !canvas) return;
+  const content = def.content(state.ctx, state.off);
+  state.content[id] = content;
+  if (id === "poster") {
+    drawPoster(canvas, content, { title: state.title, photo: state.photoOn ? state.photo : null });
+    canvas.setAttribute("aria-label", `Poster titled ${content.titles[state.title].text}. ${content.lines.join(" ")}`);
+  } else if (id === "words") {
+    drawWordsCard(canvas, content);
+    const say = (k) => `${[content.left, content.right][k]}: ${content.cols[k].map((x) => x.w).join(", ")}.`;
+    canvas.setAttribute("aria-label", `Who says what. ${say(0)} ${say(1)} ${content.lines.join(" ")}`);
+  } else if (id === "hour") {
+    drawHourCard(canvas, content);
+    canvas.setAttribute("aria-label", `Your busiest hour: ${content.title}, out of the 24 hours of your day. ${content.lines.join(" ")}`);
+  } else {
+    drawCastCard(canvas, content);
+    const who = content.people.map((p) => `${p.name}: ${p.roles.map((r) => `${r.role}, ${r.value}`).join("; ")}.`).join(" ");
+    canvas.setAttribute("aria-label", `The cast. ${who}${content.pet ? ` And introducing “${content.pet.token}”.` : ""}`);
+  }
+}
+
+function renderOptions() {
+  const def = currentCard();
+  if (!def) return;
+  const content = state.content[def.id];
+  if (!content) return; // not drawn yet
+  const box = $("card-options");
+  const nodes = [el("p", "opt-hint", "Tap anything to leave it off this card.")];
+  if (def.id === "poster") nodes.push(titleChoice(content));
+  for (const group of content.chips) {
+    if (!group.items.length) continue;
+    nodes.push(chipGroup(group.label, group.items.map((item) => chip(item.text, item.on, () => toggle(def.id, item.key), item.key))));
+  }
+  if (def.id === "poster") {
+    nodes.push(chipGroup("Photo", [chip(state.photoOn ? "Your photo" : "Add a photo", state.photoOn, togglePhoto, "photo", !state.photoOn)]));
+  }
+  const focused = document.activeElement?.dataset?.key;
+  box.replaceChildren(...nodes);
+  if (focused) box.querySelector(`[data-key="${CSS.escape(focused)}"]`)?.focus({ preventScroll: true });
+}
+
+function chipGroup(label, chips) {
+  const g = el("div", "chip-group");
+  g.setAttribute("role", "group");
+  g.setAttribute("aria-label", label);
+  const chipsBox = el("div", "chips");
+  chipsBox.append(...chips);
+  g.append(el("span", "chip-label", label), chipsBox);
+  return g;
+}
+
+function chip(text, on, onClick, key, adds = false) {
+  const b = el("button", adds ? "chip chip-add" : "chip", text);
+  b.type = "button";
+  b.dataset.key = key;
+  b.setAttribute("aria-pressed", String(on));
+  b.addEventListener("click", onClick);
+  return b;
+}
+
+function toggle(cardId, key) {
+  if (state.off.has(key)) state.off.delete(key);
+  else state.off.add(key);
+  drawCard(cardId);
+  renderOptions();
+}
+
+function titleChoice(content) {
+  const group = el("div", "segmented");
+  group.setAttribute("role", "radiogroup");
+  group.setAttribute("aria-label", "Poster title");
+  const label = el("span", "seg-label", "Title");
+  label.setAttribute("aria-hidden", "true");
+  const buttons = content.titles.map((t, i) => {
     const b = el("button", "seg-btn", t.key === "word" ? `“${t.text}”` : t.text);
     b.type = "button";
+    b.dataset.key = `title:${i}`;
     b.setAttribute("role", "radio");
     b.setAttribute("aria-checked", String(i === state.title));
     b.tabIndex = i === state.title ? 0 : -1;
@@ -259,39 +348,35 @@ function renderTitleChoice() {
     b.addEventListener("keydown", (e) => {
       if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
       e.preventDefault();
-      const n = state.poster.titles.length;
-      const j = (state.title + (e.key === "ArrowRight" ? 1 : -1) + n) % n;
-      chooseTitle(j);
-      group.querySelectorAll(".seg-btn")[j].focus();
+      const n = content.titles.length;
+      chooseTitle((state.title + (e.key === "ArrowRight" ? 1 : -1) + n) % n);
+      group.querySelectorAll(".seg-btn")[state.title].focus();
     });
     return b;
   });
-  const label = el("span", "seg-label", "Title");
-  label.setAttribute("aria-hidden", "true");
-  group.replaceChildren(label, ...buttons);
+  group.append(label, ...buttons);
   group.hidden = buttons.length < 2;
+  return group;
 }
 
 function chooseTitle(i) {
   state.title = i;
-  [...$("title-choice").querySelectorAll(".seg-btn")].forEach((b, k) => {
-    b.setAttribute("aria-checked", String(k === i));
-    b.tabIndex = k === i ? 0 : -1;
-  });
-  redraw();
+  drawCard("poster");
+  renderOptions();
+  $("card-options").querySelector(`[data-key="title:${i}"]`)?.focus({ preventScroll: true });
 }
 
 const photoInput = $("photo-file");
-$("photo-btn").addEventListener("click", () => {
-  if (state.photo) {
-    state.photo = null;
-    $("photo-btn").textContent = "Add a photo";
+function togglePhoto() {
+  if (state.photoOn) {
+    state.photoOn = false;
     setStatus("Photo removed.");
-    redraw();
+    drawCard("poster");
+    renderOptions();
     return;
   }
   photoInput.click();
-});
+}
 
 photoInput.addEventListener("change", async () => {
   const file = photoInput.files[0];
@@ -302,18 +387,21 @@ photoInput.addEventListener("change", async () => {
     try { bitmap = await createImageBitmap(file, { imageOrientation: "from-image" }); } catch { bitmap = await createImageBitmap(file); }
     state.photo = preparePhoto(bitmap); // the photo becomes a canvas here and never leaves the page
     bitmap.close();
-    $("photo-btn").textContent = "Remove photo";
+    state.photoOn = true;
     setStatus("Photo added. It stays on this device.");
-    redraw();
+    drawCard("poster");
+    renderOptions();
   } catch {
     setStatus("That file didn’t open as an image. Try a JPEG or PNG.");
   }
 });
 
 $("save-btn").addEventListener("click", () => {
+  const def = currentCard();
+  const canvas = canvases[def.id];
   canvas.toBlob((blob) => {
     if (!blob) return setStatus("Couldn’t make the image. Try again.");
-    const file = new File([blob], `${state.poster.fileName}.png`, { type: "image/png" });
+    const file = new File([blob], `${state.content[def.id].fileName}.png`, { type: "image/png" });
     const touch = window.matchMedia("(pointer: coarse)").matches;
     if (touch && navigator.canShare?.({ files: [file] })) {
       navigator.share({ files: [file] }).catch(() => {});
@@ -327,7 +415,7 @@ $("save-btn").addEventListener("click", () => {
     a.click();
     a.remove();
     setTimeout(() => URL.revokeObjectURL(url), 20000);
-    setStatus("Saved. It was made on this device.");
+    setStatus(`Saved ${def.name}. It was made on this device.`);
   }, "image/png");
 });
 
@@ -339,12 +427,16 @@ function setStatus(text) {
   statusTimer = setTimeout(() => { s.textContent = ""; }, 4000);
 }
 
-// "Start over" forgets everything: the worker that held the chat goes, and so does the page.
-$("restart").addEventListener("click", async () => {
-  await engine.burn();
-  engine.terminate();
-  location.replace(location.pathname);
-});
+// "Start over" forgets everything: the worker that held the chat goes, and so does the page. It is the one
+// action here that cannot be undone, so it asks once (and only here).
+$("restart").addEventListener("click", () => openDialog({
+  title: "Start over?",
+  body: "This forgets the chat, the poster and any photo. Nothing was saved anywhere, so there is no getting them back.",
+  actions: [
+    { label: "Start over", destructive: true, onClick: async () => { await engine.burn(); engine.terminate(); location.replace(location.pathname); } },
+    { label: "Keep my poster", primary: true },
+  ],
+}));
 
 // ---------------------------------------------------------------- one level deeper
 const sheet = createSheet();
@@ -352,10 +444,10 @@ $("open-receipts").addEventListener("click", (e) => {
   showSheet("How we counted", receiptsBody(state.receipts));
   sheet.show(e.currentTarget);
 });
-$("open-how").addEventListener("click", async (e) => {
+document.querySelectorAll(".open-how").forEach((b) => b.addEventListener("click", async () => {
   showSheet("How it works", await howBody());
-  sheet.show(e.currentTarget);
-});
+  sheet.show(b);
+}));
 
 function showSheet(title, nodes) {
   $("sheet-title").textContent = title;

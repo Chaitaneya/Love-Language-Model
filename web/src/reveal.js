@@ -24,6 +24,9 @@ function slideFor(fact, i, total) {
   if (fact.visual && fact.visual.kind === 'gap') {
     main.append(gap(fact.visual));
   }
+  if (fact.visual && fact.visual.kind === 'duel') {
+    main.append(duel(fact.visual));
+  }
   if (fact.rows) {
     const rows = el('div', 'rows');
     for (const r of fact.rows) {
@@ -32,7 +35,7 @@ function slideFor(fact, i, total) {
       rows.append(row);
     }
     main.append(rows);
-  } else {
+  } else if (fact.big != null) {
     main.append(el('h2', `big big-${fact.bigStyle}`, fact.big));
   }
   main.append(el('p', 'line', fact.line));
@@ -58,6 +61,24 @@ function monologue({ lens, n, reply }) {
     col.append(bar);
   }
   wrap.append(col, el('span', 'mono-reply', reply));
+  return wrap;
+}
+
+// Who says what: each person's words on their own side, the way their messages sit in the chat.
+function duel({ cols }) {
+  const wrap = el('div', 'duel');
+  cols.forEach((col, k) => {
+    const side = el('div', k ? 'duel-col is-right' : 'duel-col');
+    side.append(el('p', 'duel-name', col.name));
+    const list = el('ul', 'duel-words');
+    for (const w of col.words) {
+      const li = el('li', 'duel-word');
+      li.append(el('span', 'duel-w', w.w), el('span', 'duel-n', w.note));
+      list.append(li);
+    }
+    side.append(list);
+    wrap.append(side);
+  });
   return wrap;
 }
 
@@ -134,7 +155,7 @@ export function createReveal({ onDone }) {
   function announce() {
     const s = slides[index];
     document.getElementById('reveal-live').textContent =
-      [...s.querySelectorAll('.kicker, .big, .row-fact, .line')].map((n) => n.textContent).join('. ');
+      [...s.querySelectorAll('.kicker, .big, .row-fact, .duel-col, .line')].map((n) => n.textContent).join('. ');
   }
 
   function updateFooter() {

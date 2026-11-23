@@ -3,7 +3,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { makeContext, pickFacts, posterContent, receipts, duration } from "../src/facts.js";
+import { makeContext, pickFacts, posterContent, wordsContent, castContent, hourContent, wordPools, receipts, duration } from "../src/facts.js";
 import { barLayout } from "../src/poster.js";
 
 const load = (name) => JSON.parse(readFileSync(new URL(`./fixtures/${name}`, import.meta.url), "utf8"));
@@ -32,13 +32,13 @@ function allText(data = demo, names = NAMES) {
   return out.filter(Boolean);
 }
 
-test("the demo couple gets five facts, in story order", () => {
+test("the demo couple gets six highlights, in story order, and 'I love you' is still the ending", () => {
   const ids = pickFacts(ctx()).map((f) => f.id);
-  assert.deepEqual(ids, ["first_message", "reply_median", "longest_monologue", "busiest_day", "first_ily"]);
+  assert.deepEqual(ids, ["first_message", "reply_median", "longest_monologue", "busiest_day", "words", "first_ily"]);
 });
 
 test("the copy is specific: the real numbers, dates and quotes", () => {
-  const [first, reply, run, busy, ily] = pickFacts(ctx());
+  const [first, reply, run, busy, , ily] = pickFacts(ctx());
   assert.equal(first.big, "“hi, is this Tara?”");
   assert.match(first.line, /47,381 more followed/);
   assert.deepEqual(reply.rows.map((r) => [r.name, r.value]), [["Rohan", "1 min 40 s"], ["Tara", "23 min"]]);
@@ -69,7 +69,8 @@ test("the names you type are the names you read (quotes stay exactly as they wer
   const outsideQuotes = text.replace(/“[^”]*”/g, "");
   assert.doesNotMatch(outsideQuotes, /\bRohan\b|\bTara\b/);
   assert.match(text, /Chai/);
-  assert.match(text, /Chitra said “I love you” first|Chitra said ‘I love you’ first/);
+  assert.match(text, /Chitra said “I\u00a0love\u00a0you” first/); // the highlight holds the words together
+  assert.match(text, /Chitra said “I love you” first\./); // the poster uses the same quotes as the highlights
   assert.match(text, /“hi, is this Tara\?”/); // a real quote is not rewritten
 });
 
@@ -109,16 +110,17 @@ test("the receipts never repeat a highlight, and say what counting cannot know",
   const facts = pickFacts(c);
   const r = receipts(c, facts);
   assert.equal(r.sections[0].items.length, facts.length);
-  const also = r.sections[1].items.map((i) => i.label);
-  assert.ok(also.includes("Affectionate messages") && also.includes("Pet name"));
-  assert.match(r.sections[1].items.find((i) => i.label === "Affectionate messages").how, /counts words, not feelings/);
+  assert.ok(r.sections.length >= 3, "highlights, what is on your cards, and the rest");
+  const labels = r.sections.flatMap((sec) => sec.items.map((i) => i.label));
+  // "affectionate messages, Rohan 1,535, Tara 608" reads as "who loves more": it is shown nowhere (D48)
+  assert.ok(!labels.some((l) => /affection/i.test(l)));
   assert.ok(r.limits.some((l) => /words, not feelings/.test(l)));
 });
 
 test("the poster: one idea, real bars, no names in the file name", () => {
   const p = posterContent(ctx());
   assert.deepEqual(p.titles.map((t) => t.text), ["hmm", "Rohan & Tara"]);
-  assert.deepEqual(p.lines, ["Rohan sent 31 messages in a row.", "Tara said ‘I love you’ first."]);
+  assert.deepEqual(p.lines, ["Rohan sent 31 messages in a row.", "Tara said “I love you” first."]);
   const run = demo.stats.find((s) => s.id === "longest_monologue").values;
   assert.deepEqual(p.monologue, { n: 31, lens: run.lens });
   assert.equal(p.lens, undefined);
@@ -147,3 +149,43 @@ test("durations read like a person would say them", () => {
   assert.equal(duration(45), "45 s");
   assert.equal(duration(120), "2 min");
 });
+
+test("who says what: each person's own words, never a hidden name, never an apology or a swear word", () => {
+  const w = wordsContent(ctx());
+  assert.deepEqual(w.cols.map((col) => col.map((x) => x.w)), [["hmm", "nahi", "acha"], ["bro", "scene", "chalo"]]);
+  assert.deepEqual(w.lines, ["Rohan has said “bro” 1,200 times. Tara, 12."]);
+  const d = clone(demo);
+  d.words.dueling.A.unshift({ w: "sorry", z: 9, nA: 300, nB: 5 }, { w: "priya", z: 9, nA: 200, nB: 3 });
+  d.words.hidden = [{ w: "priya", nA: 200, nB: 3 }];
+  const pools = wordPools(ctx(d));
+  assert.ok(!pools.A.some((x) => x.w === "sorry" || x.w === "priya")); // the core keeps apologies behind Spicy
+  const off = new Set(["word:A:bro"]); // leave one of Rohan's off: the next word takes its place
+  assert.ok(!wordsContent(ctx(), off).cols[1].some((x) => x.w === "bro"));
+});
+
+test("the cast: counted roles with both numbers, the same count for each person, no emoji and no labels", () => {
+  const cast = castContent(ctx());
+  assert.deepEqual(cast.people.map((p) => [p.name, p.roles.map((r) => `${r.role} ${r.value} (${r.note})`)]), [
+    ["Tara", ["gets the laugh 141 (ROHAN 75)", "sends the voice notes 160 (ROHAN 18)"]],
+    ["Rohan", ["says hi first 1,204 (TARA 535)", "sends the follow-up 1,067 (TARA 123)"]],
+  ]);
+  assert.equal(cast.pet.token, "babu");
+  const text = JSON.stringify(cast);
+  assert.doesNotMatch(text, /\bTHE [A-Z]{3,}|😭|\d\.\d/); // no "THE GHOST"-style billing, no emoji, no decimals
+  assert.doesNotMatch(text, /ghost|philosopher|double texter/i);
+});
+
+test("the busiest hour: the real 24 hours, the peak, and lines you can leave off", () => {
+  const h = hourContent(ctx());
+  const hours = demo.charts.hours;
+  assert.equal(h.title, "2 AM");
+  assert.equal(h.peak, 2);
+  assert.deepEqual(h.totals, hours.A.map((a, i) => a + hours.B[i]));
+  assert.equal(h.totals.indexOf(Math.max(...h.totals)), 2);
+  assert.deepEqual(h.lines, ["One in ten of all your messages.", "A third, between midnight and 5 AM."]);
+  assert.deepEqual(hourContent(ctx(), new Set(["line:night"])).lines, ["One in ten of all your messages."]);
+  const none = clone(demo);
+  none.stats = none.stats.filter((x) => x.id !== "peak_hour");
+  assert.equal(hourContent(ctx(none)), null);
+});
+

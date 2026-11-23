@@ -218,3 +218,167 @@ export function drawPoster(canvas, content, { title = 0, photo = null } = {}) {
 
   grain(ctx, dark ? 0.06 : 0.09);
 }
+
+// ---------------------------------------------------------------- the two other cards
+// Same paper, margins, grain, title line and credits as the poster, so the three read as one set.
+
+const TITLE_BASE = 1494;
+const TAGLINE_TOP = 1604;
+
+function paperGround(ctx) {
+  ctx.fillStyle = PAPER;
+  ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = INK;
+  ctx.textBaseline = "alphabetic";
+}
+
+function caps(ctx, text, x, y, align = "left", size = 26, alpha = 0.9) {
+  ctx.font = `600 ${size}px "Inter"`;
+  ctx.globalAlpha = alpha;
+  tracked(ctx, text.toUpperCase(), x, y, size * (size > 24 ? 0.22 : 0.16), align);
+  ctx.globalAlpha = 1;
+}
+
+// Serif text that never runs past `max`: shrink it until it fits.
+function fitSerif(ctx, text, size, max, style = "") {
+  ctx.font = `${style} 400 ${size}px "DM Serif Display"`.trim();
+  const w = ctx.measureText(text).width;
+  if (w <= max) return size;
+  const s = Math.floor((size * max) / w);
+  ctx.font = `${style} 400 ${s}px "DM Serif Display"`.trim();
+  return s;
+}
+
+function titleBlock(ctx, text, { color = INK, maxSize = 190, kicker = null } = {}) {
+  const measure = W - 2 * M;
+  const t = titleLayout(ctx, text, maxSize, measure);
+  const lead = t.size * 0.92;
+  const base = TITLE_BASE - (t.lines.length - 1) * lead;
+  if (kicker) {
+    ctx.fillStyle = INK;
+    caps(ctx, kicker, M, base - t.size * 0.86 - 28, "left", 24, 0.72);
+  }
+  ctx.font = `400 ${t.size}px "DM Serif Display"`;
+  ctx.fillStyle = color;
+  t.lines.forEach((line, i) => tracked(ctx, line, M - t.size * 0.02, base + i * lead, -t.size * 0.02));
+}
+
+function taglines(ctx, lines) {
+  ctx.fillStyle = INK;
+  lines.forEach((line, i) => {
+    fitSerif(ctx, line, 46, W - 2 * M, "italic");
+    tracked(ctx, line, M, TAGLINE_TOP + i * 60, -0.2);
+  });
+}
+
+// Bottom-anchored, so two or three lines both end where the poster's do.
+function creditsBlock(ctx, lines) {
+  ctx.fillStyle = INK;
+  ctx.font = '600 22px "Inter"';
+  ctx.globalAlpha = 0.72;
+  lines.forEach((line, i) => tracked(ctx, line, M, 1820 - (lines.length - 1 - i) * 38, 22 * 0.16));
+  tracked(ctx, "LOVE LANGUAGE MODEL", W - M, 1820, 22 * 0.16, "right");
+  ctx.globalAlpha = 1;
+}
+
+/** Who says what: each person's words on their own side, alternating down the page like a chat. */
+export function drawWordsCard(canvas, content) {
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext("2d");
+  paperGround(ctx);
+  caps(ctx, content.left, M, 168);
+  caps(ctx, content.right, W - M, 168, "right");
+
+  const rows = [];
+  const most = Math.max(content.cols[0].length, content.cols[1].length);
+  for (let i = 0; i < most; i++) {
+    if (content.cols[0][i]) rows.push({ ...content.cols[0][i], right: false });
+    if (content.cols[1][i]) rows.push({ ...content.cols[1][i], right: true });
+  }
+  const top = 372;
+  const step = rows.length > 1 ? Math.min(158, (1160 - top) / (rows.length - 1)) : 0;
+  rows.forEach((r, i) => {
+    const y = top + i * step;
+    const x = r.right ? W - M : M;
+    const size = fitSerif(ctx, r.w, 128, (W - 2 * M) * 0.72);
+    ctx.fillStyle = r.accent ? RED : INK;
+    tracked(ctx, r.w, r.right ? x + size * 0.02 : x - size * 0.02, y, -size * 0.02, r.right ? "right" : "left");
+    ctx.fillStyle = INK;
+    caps(ctx, r.note, x, y + 50, r.right ? "right" : "left", 20, 0.6);
+  });
+
+  titleBlock(ctx, content.title);
+  taglines(ctx, content.lines);
+  creditsBlock(ctx, content.credits);
+  grain(ctx, 0.09);
+}
+
+/** The cast: a billing block. Each role is one counted behaviour, with both numbers. */
+export function drawCastCard(canvas, content) {
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext("2d");
+  paperGround(ctx);
+  caps(ctx, "The cast", M, 168);
+
+  let y = 290;
+  for (const person of content.people) {
+    fitSerif(ctx, person.name, 112, W - 2 * M);
+    ctx.fillStyle = INK;
+    tracked(ctx, person.name, M - 2, y, -2);
+    let r = y + 34;
+    for (const role of person.roles) {
+      ctx.globalAlpha = 0.16;
+      ctx.fillRect(M, r, W - 2 * M, 2);
+      ctx.globalAlpha = 1;
+      ctx.font = '400 58px "DM Serif Display"';
+      const valueW = ctx.measureText(role.value).width;
+      tracked(ctx, role.value, W - M, r + 68, -0.6, "right");
+      fitSerif(ctx, role.role, 50, W - 2 * M - valueW - 40, "italic");
+      tracked(ctx, role.role, M, r + 66, -0.2);
+      caps(ctx, role.note, W - M, r + 100, "right", 20, 0.6);
+      r += 122;
+    }
+    y = r + 120;
+  }
+
+  if (content.pet) {
+    titleBlock(ctx, `“${content.pet.token}”`, { color: RED, maxSize: 200, kicker: "And introducing" });
+    taglines(ctx, [content.pet.line]);
+  } else {
+    titleBlock(ctx, content.names ?? "");
+  }
+  creditsBlock(ctx, content.credits);
+  grain(ctx, 0.09);
+}
+
+/** The busiest hour: the 24 hours of your day as bars, from every message's timestamp, the peak in red. */
+export function drawHourCard(canvas, content) {
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext("2d");
+  paperGround(ctx);
+  caps(ctx, content.left, M, 168);
+  caps(ctx, content.right, W - M, 168, "right");
+
+  const top = 300, bottom = 1046, width = W - 2 * M;
+  const gap = 10, barW = (width - gap * 23) / 24;
+  const most = Math.max(1, ...content.totals);
+  content.totals.forEach((n, h) => {
+    const bh = n ? Math.max(6, (bottom - top) * (n / most)) : 3; // an empty hour is a hairline, not a gap
+    ctx.fillStyle = h === content.peak ? RED : INK;
+    roundRect(ctx, M + h * (barW + gap), bottom - bh, barW, bh, Math.min(barW / 2, 6));
+    ctx.fill();
+  });
+  ctx.fillStyle = INK;
+  for (const [h, label] of [[0, "12 AM"], [6, "6 AM"], [12, "12 PM"], [18, "6 PM"]]) {
+    caps(ctx, label, M + h * (barW + gap), bottom + 46, "left", 20, 0.6);
+  }
+
+  titleBlock(ctx, content.title, { color: RED, maxSize: 330, kicker: content.kicker });
+  taglines(ctx, content.lines);
+  creditsBlock(ctx, content.credits);
+  grain(ctx, 0.09);
+}
+

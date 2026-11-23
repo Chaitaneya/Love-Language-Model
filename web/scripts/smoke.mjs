@@ -2,7 +2,7 @@
 //   node scripts/smoke.mjs
 // It proves (1) the wheel imports and runs under Pyodide's Python, (2) the result equals native CPython's
 // (same JSON, so no platform float drift), (3) errors arrive coded, and (4) how long it all takes.
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { isDeepStrictEqual } from "node:util";
 import { spawnSync } from "node:child_process";
 import { dirname, join, resolve } from "node:path";
@@ -46,12 +46,18 @@ check(spicy.result.poster.title.text === "SORRY 214", "spicy title", spicy.resul
 console.log(`analyze (47,382 messages): ${timings.join(", ")} ms plain, ${spicyMs} ms spicy   [CPython 3.13 native: ~1100 ms]`);
 
 // the browser and native CPython must agree to the byte on everything the UI shows
-const native = spawnSync(join(root, ".venv", "bin", "python"), ["-I", "-c", `
+// the project venv when there is one (a laptop), otherwise the system python3 (CI has no venv)
+const nativePython = [join(root, ".venv", "bin", "python"), "python3"].find((p) => p === "python3" || existsSync(p));
+const native = spawnSync(nativePython, ["-I", "-c", `
 import sys, json
 sys.path.insert(0, "${join(root, "core")}")
 from lovelm.api import load_chat, analyze
 r = analyze(load_chat(open("${join(root, "demo", "demo_chat.txt")}", "rb").read()), seed=1234)
 print(json.dumps(r, ensure_ascii=False, separators=(",", ":")))`], { encoding: "utf8", maxBuffer: 1 << 28 });
+if (native.status !== 0 || !native.stdout) {
+  console.log(`FAIL native CPython run (${nativePython}): ${native.error?.message || native.stderr.trim().split("\n").pop()}`);
+  process.exit(1);
+}
 // compare parsed values: JSON text differs harmlessly ("1.0" vs "1"), the data must not
 const nativeResult = JSON.parse(native.stdout);
 const same = isDeepStrictEqual(plain.result, nativeResult);

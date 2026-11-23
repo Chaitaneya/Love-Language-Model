@@ -16,8 +16,7 @@ async function addChat(page, file) {
 async function throughToPoster(page) {
   await page.click("#names-done");
   await expect(page.locator("#reveal")).toBeVisible();
-  for (let i = 0; i < 4; i++) await page.click("#next");
-  await expect(page.locator("#next")).toHaveText("Make our poster");
+  while ((await page.locator("#next").innerText()) !== "Make our poster") await page.click("#next");
   await page.click("#next");
   await expect(page.locator("#poster")).toBeVisible();
 }
@@ -30,7 +29,7 @@ test("the demo couple, start to poster, and nothing is requested after the chat 
   await expect(page.locator("#names")).toBeVisible({ timeout: 60_000 });
   await expect(page.locator("#name-a-label")).toHaveText("Sent 28,429 messages");
   await throughToPoster(page);
-  await expect(page.locator("#poster-canvas")).toHaveAttribute("aria-label", /Poster titled hmm\. Rohan sent 31 messages in a row\. Tara said ‘I love you’ first\./);
+  await expect(page.locator('.card[data-card="poster"] canvas')).toHaveAttribute("aria-label", /Poster titled hmm\. Rohan sent 31 messages in a row\. Tara said “I love you” first\./);
   expect((await canvasFingerprint(page)).colours, "the poster is not blank").toBeGreaterThan(6);
 
   const demoIndex = net.log.findIndex((r) => r.url.endsWith("/demo/demo_chat.txt"));
@@ -52,10 +51,12 @@ test("your own chat: zero network requests from 'ready' to the poster and the re
   await page.click("#names-done");
 
   const texts = [];
-  for (let i = 0; i < 5; i++) {
+  for (let last = false; !last;) {
+    last = (await page.locator("#next").innerText()) === "Make our poster";
     texts.push(await slide(page).innerText());
     await page.click("#next");
   }
+  expect(texts.length, "six highlights").toBe(6);
   const all = texts.join("\n");
   expect(all).toContain("“hi, is this Tara?”"); // a real quote is never rewritten
   expect(all).toContain("Chai");
@@ -63,7 +64,7 @@ test("your own chat: zero network requests from 'ready' to the poster and the re
   expect(all).toContain("Slower to reply, first to say it.");
   expect(all, "no scores, weights or decimals on the main path").not.toMatch(/\d\.\d|score|weight/i);
   await expect(page.locator("#poster")).toBeVisible();
-  await expect(page.locator("#poster-canvas")).toHaveAttribute("aria-label", /Chai sent 31 messages in a row/);
+  await expect(page.locator('.card[data-card="poster"] canvas')).toHaveAttribute("aria-label", /Chai sent 31 messages in a row/);
 
   await page.click("#open-receipts");
   await expect(page.locator("#sheet-title")).toHaveText("How we counted");
@@ -118,7 +119,7 @@ test("a photo, then a real PNG: 1080 x 1920, no names in the filename, no networ
   await snapshot(page, "plain");
   const plain = await canvasFingerprint(page);
   await page.setInputFiles("#photo-file", { name: "us.png", mimeType: "image/png", buffer: makePng() });
-  await expect(page.locator("#photo-btn")).toHaveText("Remove photo");
+  await expect(page.locator('[data-key="photo"]')).toHaveText("Your photo");
   const withPhoto = await canvasFingerprint(page);
   expect(withPhoto.hash).not.toBe(plain.hash);
   await snapshot(page, "withPhoto");
@@ -132,8 +133,8 @@ test("a photo, then a real PNG: 1080 x 1920, no names in the filename, no networ
   expect([info.width, info.height]).toEqual([1080, 1920]);
   expect(png.length).toBeLessThan(8 * 1024 * 1024);
 
-  await page.click("#photo-btn"); // remove it
-  await expect(page.locator("#photo-btn")).toHaveText("Add a photo");
+  await page.click('[data-key="photo"]'); // remove it
+  await expect(page.locator('[data-key="photo"]')).toHaveText("Add a photo");
   await snapshot(page, "removed");
   const back = await snapshotDiff(page, "plain", "removed");
   // removing the photo gives the plain poster back (not bit-for-bit after a read-back: see helpers.mjs)
@@ -141,8 +142,8 @@ test("a photo, then a real PNG: 1080 x 1920, no names in the filename, no networ
   expect(back.visibleShare, "under 1% of pixels changed by more than 8 levels").toBeLessThan(0.01);
   expect((await snapshotDiff(page, "plain", "withPhoto")).meanDelta, "and this check does notice a real change").toBeGreaterThan(3);
 
-  await page.click("[data-title-index='1'], .seg-btn >> nth=1"); // the other title
-  await expect(page.locator("#poster-canvas")).toHaveAttribute("aria-label", /Poster titled Rohan & Tara/);
+  await page.click('.seg-btn >> nth=1'); // the other title
+  await expect(page.locator('.card[data-card="poster"] canvas')).toHaveAttribute("aria-label", /Poster titled Rohan & Tara/);
   expect(net.since()).toEqual([]);
 });
 
@@ -194,11 +195,20 @@ test("on a phone: no sideways scrolling on any screen, and the poster fits", asy
   await expect(page.locator("#names")).toBeVisible({ timeout: 60_000 });
   expect(await noSidewaysScroll(page), "names").toBe(true);
   await page.click("#names-done");
-  for (let i = 0; i < 5; i++) {
+  // the highlights fill the screen exactly (no vertical scroll), and the words share one left edge with the buttons
+  const m = await page.evaluate(() => {
+    const inner = document.querySelector("#track .slide[aria-hidden=false] .slide-inner");
+    return { docH: document.documentElement.scrollHeight, viewH: innerHeight,
+      text: inner.getBoundingClientRect().left + parseFloat(getComputedStyle(inner).paddingLeft),
+      next: document.querySelector("#next").getBoundingClientRect().left };
+  });
+  expect(m.docH, "the highlights screen does not scroll").toBeLessThanOrEqual(m.viewH);
+  expect(Math.abs(m.text - m.next), "one left edge").toBeLessThan(1);
+  for (let i = 0; i < 6; i++) {
     expect(await noSidewaysScroll(page), `highlight ${i + 1}`).toBe(true);
     await page.click("#next");
   }
-  const w = await page.locator("#poster-canvas").evaluate((c) => c.getBoundingClientRect().width);
+  const w = await page.locator('.card[data-card="poster"] canvas').evaluate((c) => c.getBoundingClientRect().width);
   expect(w).toBeLessThanOrEqual(375);
   expect(await noSidewaysScroll(page), "poster").toBe(true);
   await page.click("#open-receipts");
@@ -212,9 +222,14 @@ test("Start over forgets the chat and comes back to the landing page", async ({ 
   await page.click("#names-done");
   await page.click("#skip");
   await page.click("#restart");
+  await expect(page.locator("#dialog-title")).toHaveText("Start over?"); // the one destructive action asks first
+  await page.getByRole("button", { name: "Keep my poster" }).click();
+  await expect(page.locator("#poster")).toBeVisible();
+  await page.click("#restart");
+  await page.locator("#dialog").getByRole("button", { name: "Start over" }).click();
   await expect(page.locator("#landing")).toBeVisible();
   await ready(page);
-  await page.click("#open-how");
+  await page.click("#open-how-landing");
   await expect(page.locator("#net-count")).toHaveText("—"); // no chat in memory any more
 });
 
@@ -231,3 +246,44 @@ test("the licences are one click away, and the 404 page is styled under its own 
   const h1 = await page.locator("h1").evaluate((el) => getComputedStyle(el).textTransform);
   expect(h1, "the page's own CSS applied").toBe("uppercase");
 });
+
+test("four cards to keep: each saves as a real image, and anything on one can be left off", async ({ page, net }) => {
+  await page.goto("/");
+  await ready(page);
+  await page.click("#go-demo");
+  await page.click("#names-done");
+  await page.click("#skip");
+  net.mark();
+  await expect(page.locator("#pager [role=tab]")).toHaveText(["Poster", "Words", "Cast", "Hour"]);
+
+  for (const [tab, card, file, label] of [
+    ["Words", "words", "love-language-model-words.png", /Who says what\. Tara: hmm, nahi, acha\. Rohan: bro, scene, chalo\./],
+    ["Cast", "cast", "love-language-model-cast.png", /The cast\. Tara: gets the laugh, 141; sends the voice notes, 160\. Rohan: says hi first, 1,204; sends the follow-up, 1,067\. And introducing “babu”\./],
+    ["Hour", "hour", "love-language-model-hour.png", /Your busiest hour: 2 AM, out of the 24 hours of your day\. One in ten of all your messages\./],
+  ]) {
+    await page.getByRole("tab", { name: tab }).click();
+    const canvas = page.locator(`.card[data-card="${card}"] canvas`);
+    await expect(canvas).toHaveAttribute("aria-label", label);
+    const [download] = await Promise.all([page.waitForEvent("download"), page.click("#save-btn")]);
+    expect(download.suggestedFilename()).toBe(file); // never a name in a file name
+    const path = join(mkdtempSync(join(tmpdir(), "llm-")), file);
+    await download.saveAs(path);
+    const info = pngSize(readFileSync(path));
+    expect([info.width, info.height]).toEqual([1080, 1920]);
+  }
+
+  // leave a line off the hour card: it disappears from the image, and comes back
+  const hour = page.locator('.card[data-card="hour"] canvas');
+  await page.getByRole("button", { name: "After midnight" }).click();
+  await expect(hour).not.toHaveAttribute("aria-label", /midnight/);
+  await page.getByRole("button", { name: "After midnight" }).click();
+  await expect(hour).toHaveAttribute("aria-label", /between midnight and 5 AM/);
+
+  // no card bills a feeling, an emoji or a verdict label
+  for (const card of ["poster", "words", "cast", "hour"]) {
+    const text = await page.locator(`.card[data-card="${card}"] canvas`).getAttribute("aria-label");
+    expect(text).not.toMatch(/THE GHOST|DOUBLE TEXTER|loves more|score|😭/);
+  }
+  expect(net.since()).toEqual([]);
+});
+

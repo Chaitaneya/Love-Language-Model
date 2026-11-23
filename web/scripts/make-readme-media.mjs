@@ -1,6 +1,6 @@
 // Makes the pictures the README shows, from the real production build, driven in your installed Chrome:
 //   docs/img/poster.jpg   the demo couple's poster (exactly what "Download PNG" produces, shrunk for the page)
-//   docs/img/demo.gif     a phone-sized tour: landing, names, the five highlights, the poster, the receipts
+//   docs/img/demo.gif     a phone-sized tour: landing, names, the six highlights, the four cards, the receipts
 // Needs: a production build (npm run build), Google Chrome, ffmpeg, and macOS `sips` (or Pillow) for the JPEG.
 //   usage: npm run media            (use --keep-frames to leave the PNG frames in a temp folder)
 import { spawn, spawnSync } from "node:child_process";
@@ -46,14 +46,21 @@ try {
   await settle();
   await shot(1.6);                                                   // 2. names
   await page.click("#names-done");
-  for (let i = 0; i < 5; i++) {                                      // 3-7. the five highlights
+  for (let i = 0; i < 6; i++) {                                      // 3-8. the six highlights
     await settle(900);
     await shot(i === 0 ? 2.2 : 2.6);
     await page.click("#next");
   }
   await page.locator("#poster").waitFor({ state: "visible" });
   await settle(900);
-  await shot(3.2);                                                   // 8. the poster
+  await shot(3.2);                                                   // 9. the poster
+  for (const tab of ["Words", "Cast", "Hour"]) {                     // 10-12. the other cards
+    await page.getByRole("tab", { name: tab }).click();
+    await settle(1100);
+    await shot(2.2);
+  }
+  await page.getByRole("tab", { name: "Poster" }).click();
+  await settle(900);
 
   // the poster image for the README: the real export, shrunk
   const [download] = await Promise.all([page.waitForEvent("download"), page.click("#save-btn")]);
