@@ -1,0 +1,101 @@
+# Every suite on every push and pull request; on main, once all of them pass, the site is published to
+# GitHub Pages. (Written without being able to run it: see "Honest notes" in docs/decision.md D43.)
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  python:
+    name: Python core (${{ matrix.python }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.11", "3.13"] # the declared minimum, and the version Pyodide runs
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - run: python -m pip install pytest hypothesis
+      - name: Unit, property and demo-chat tests
+        working-directory: core
+        run: python -m pytest -q
+      - name: The committed demo chat is not stale
+        if: matrix.python == '3.13'
+        run: python tools/make_demo_chat.py --check
+
+  web:
+    name: Web (unit, smoke, build, browser)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: python -m pip install setuptools wheel # builds the lovelm wheel the page loads
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - name: Install
+        working-directory: web
+        run: npm ci
+      - name: JavaScript unit tests
+        working-directory: web
+        run: npm test
+      - name: Smoke test (Pyodide in Node equals native CPython)
+        working-directory: web
+        run: npm run smoke
+      - name: Browser tests against the production build, in Google Chrome (preinstalled on the runner)
+        working-directory: web
+        run: npm run e2e
+      - name: Keep the browser traces when something failed
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-results
+          path: web/test-results
+          if-no-files-found: ignore
+      - name: Prepare the Pages artifact (main only)
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        run: |
+          # A project site lives under /<repo>/, so the 404 page's "back" link must too.
+          # (A user or organisation site, <name>.github.io, lives at the root and needs no change.)
+          repo="${GITHUB_REPOSITORY#*/}"
+          case "$repo" in
+            *.github.io) ;;
+            *) sed -i "s|<a href=\"/\">|<a href=\"/${repo}/\">|" web/dist/404.html ;;
+          esac
+          touch web/dist/.nojekyll
+      - name: Upload the site
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: web/dist
+
+  deploy:
+    name: Publish to GitHub Pages
+    needs: [python, web]
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

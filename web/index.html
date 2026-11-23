@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <!--CSP-->
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#14110F">
+  <title>Love Language Model</title>
+  <meta name="description" content="Your WhatsApp chat, made into a movie poster. The chat is read on your device and never uploaded.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23ECE4D6'/%3E%3Crect x='14' y='7' width='12' height='2.4' rx='1.2' fill='%231B1715'/%3E%3Crect x='18' y='11' width='8' height='2.4' rx='1.2' fill='%231B1715'/%3E%3Crect x='12' y='15' width='14' height='2.4' rx='1.2' fill='%231B1715'/%3E%3Crect x='6' y='21' width='6' height='2.4' rx='1.2' fill='%23B8322A'/%3E%3C/svg%3E">
+</head>
+<body>
+  <noscript><p class="noscript">This needs JavaScript switched on: the counting runs inside this page. Nothing is sent anywhere either way.</p></noscript>
+  <main id="app">
+
+    <!-- 1. Landing -->
+    <section class="screen" id="landing" aria-labelledby="landing-title">
+      <div class="landing">
+        <figure class="landing-poster">
+          <canvas id="preview-canvas" width="1080" height="1920" role="img" aria-label="An example poster made from a demo couple's chat"></canvas>
+          <figcaption id="preview-caption">Made from a demo couple’s chat</figcaption>
+        </figure>
+        <div class="landing-text">
+          <p class="wordmark">Love Language Model</p>
+          <h1 id="landing-title" class="display" tabindex="-1">Your chat, made into a movie poster.</h1>
+          <p class="lede">Add a WhatsApp chat with your person. We find a few true moments in it, the kind only you two would recognise, and put them on a poster.</p>
+          <button class="btn btn-primary" id="go-add" type="button">Add your chat</button>
+          <button class="btn btn-quiet" id="go-demo" type="button">Try it with a demo couple</button>
+          <p class="privacy"><span class="lock" aria-hidden="true"></span>Your chat is read on this device and never uploaded.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Add your chat -->
+    <section class="screen" id="add" aria-labelledby="add-title" hidden>
+      <header class="bar">
+        <button class="icon-btn" type="button" data-back aria-label="Back"><span class="chev" aria-hidden="true"></span></button>
+      </header>
+      <div class="column" id="add-choose">
+        <h1 id="add-title" class="title" tabindex="-1">Add your chat</h1>
+        <label class="drop" id="drop">
+          <input type="file" id="chat-file" accept=".zip,.txt,text/plain,application/zip" class="visually-hidden">
+          <span class="drop-icon" aria-hidden="true"></span>
+          <span class="drop-main">Choose the exported chat</span>
+          <span class="drop-sub" id="drop-sub">A .zip or .txt file from WhatsApp</span>
+        </label>
+        <div class="steps">
+          <p class="steps-title">How to export it</p>
+          <p><strong>iPhone:</strong> open the chat, tap their name, then Export Chat, Without Media.</p>
+          <p><strong>Android:</strong> open the chat, tap ⋮, then More, Export chat, Without media.</p>
+        </div>
+        <p class="privacy"><span class="lock" aria-hidden="true"></span>The file is read here, on this device. Nothing is uploaded.</p>
+        <button class="btn btn-quiet" id="add-demo" type="button">No chat handy? Use the demo couple</button>
+      </div>
+      <div class="column loading" id="add-loading" hidden aria-live="polite">
+        <div class="loading-inner">
+          <div class="pulse" aria-hidden="true"><span></span><span></span><span></span></div>
+          <p class="loading-line" id="loading-line">Reading your chat</p>
+          <p class="loading-sub">Still on this device.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Names -->
+    <section class="screen" id="names" aria-labelledby="names-title" hidden>
+      <header class="bar">
+        <button class="icon-btn" type="button" data-back aria-label="Back"><span class="chev" aria-hidden="true"></span></button>
+      </header>
+      <form class="column" id="names-form" novalidate>
+        <h1 id="names-title" class="title" tabindex="-1">Who’s in this chat?</h1>
+        <p class="sub">We found two people. Fix the names if WhatsApp has them saved as something else.</p>
+        <div class="field">
+          <label for="name-a" id="name-a-label">First person</label>
+          <input id="name-a" name="a" autocomplete="off" autocapitalize="words" spellcheck="false" maxlength="18" required>
+        </div>
+        <div class="field">
+          <label for="name-b" id="name-b-label">Second person</label>
+          <input id="name-b" name="b" autocomplete="off" autocapitalize="words" spellcheck="false" maxlength="18" required>
+        </div>
+        <button class="btn btn-primary" type="submit" id="names-done">That’s us</button>
+      </form>
+    </section>
+
+    <!-- 4. The reveal -->
+    <section class="screen" id="reveal" aria-label="Highlights" aria-roledescription="carousel" hidden>
+      <header class="bar reveal-bar">
+        <button class="icon-btn" type="button" data-back aria-label="Back to names"><span class="chev" aria-hidden="true"></span></button>
+        <div class="progress" id="progress" aria-hidden="true"></div>
+        <button class="text-btn" type="button" id="skip">Skip</button>
+      </header>
+      <p class="visually-hidden" id="reveal-live" aria-live="polite"></p>
+      <div class="stage" id="stage" tabindex="-1">
+        <div class="track" id="track"></div>
+      </div>
+      <footer class="reveal-foot">
+        <p class="hint" id="hint">Tap or swipe</p>
+        <button class="btn btn-primary" type="button" id="next">Next</button>
+      </footer>
+    </section>
+
+    <!-- 5. The poster -->
+    <section class="screen" id="poster" aria-labelledby="poster-title" hidden>
+      <header class="bar">
+        <button class="icon-btn" type="button" data-back aria-label="Back to highlights"><span class="chev" aria-hidden="true"></span></button>
+        <button class="text-btn" type="button" id="restart">Start over</button>
+      </header>
+      <div class="poster-layout">
+        <figure class="poster-frame">
+          <canvas id="poster-canvas" width="1080" height="1920" role="img" aria-label="Your poster"></canvas>
+        </figure>
+        <div class="poster-controls">
+          <h1 id="poster-title" class="title poster-heading" tabindex="-1">Your poster</h1>
+          <div class="segmented" id="title-choice" role="radiogroup" aria-label="Poster title"></div>
+          <div class="row">
+            <button class="btn btn-secondary" type="button" id="photo-btn">Add a photo</button>
+            <button class="btn btn-primary" type="button" id="save-btn">Save image</button>
+          </div>
+          <input type="file" id="photo-file" accept="image/*" class="visually-hidden" tabindex="-1" aria-hidden="true">
+          <p class="status" id="status" role="status"></p>
+          <button class="link-btn" type="button" id="open-receipts">How we counted all this<span class="chev-up" aria-hidden="true"></span></button>
+        </div>
+      </div>
+    </section>
+
+    <footer class="foot-links">
+      <button type="button" id="open-how">How it works</button>
+      <a href="./licenses.txt">Licences</a>
+    </footer>
+  </main>
+
+  <!-- 6. One level deeper: the receipts, and how it works -->
+  <div class="scrim" id="scrim" hidden></div>
+  <section class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title" hidden>
+    <div class="sheet-grab" id="sheet-grab">
+      <span class="grabber" aria-hidden="true"></span>
+      <div class="sheet-head">
+        <h2 id="sheet-title" tabindex="-1">How we counted</h2>
+        <button class="text-btn" type="button" id="close-receipts">Done</button>
+      </div>
+    </div>
+    <div class="sheet-body" id="sheet-body"></div>
+  </section>
+
+  <!-- A straight answer when a file cannot be used -->
+  <dialog class="dialog" id="dialog" aria-labelledby="dialog-title">
+    <h2 id="dialog-title"></h2>
+    <p id="dialog-body"></p>
+    <details id="dialog-tech" hidden><summary>Technical note</summary><pre id="dialog-pre"></pre></details>
+    <div class="dialog-actions" id="dialog-actions"></div>
+  </dialog>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

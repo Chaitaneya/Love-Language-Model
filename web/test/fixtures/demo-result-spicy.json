@@ -1,0 +1,2552 @@
+{
+ "schema": 1,
+ "meta": {
+  "format": "ios",
+  "date_order": "DMY",
+  "has_seconds": true,
+  "range": [
+   "2024-01-03",
+   "2025-10-23"
+  ],
+  "messages": 47382,
+  "conversations": 1739,
+  "warnings": [],
+  "spicy": true,
+  "quotes": true,
+  "conv_gap_hours": 4
+ },
+ "people": {
+  "A": {
+   "name": "Rohan"
+  },
+  "B": {
+   "name": "Tara"
+  }
+ },
+ "stats": [
+  {
+   "id": "apologies",
+   "pri": "P1",
+   "kind": "versus",
+   "theme": "apology",
+   "valence": "U",
+   "spicy": true,
+   "subject": "A",
+   "score": 0.9962,
+   "values": {
+    "a": 214,
+    "b": 9,
+    "W": "Rohan",
+    "L": "Tara",
+    "w": 214,
+    "l": 9,
+    "r": 21.5,
+    "win": "A"
+   },
+   "quote_ids": [],
+   "lines": [
+    "Rohan apologized 214 times. Tara, 9. We're not saying anything. We're just saying."
+   ]
+  },
+  {
+   "id": "longest_monologue",
+   "pri": "P0",
+   "kind": "event",
+   "theme": "effort",
+   "valence": "N",
+   "spicy": false,
+   "subject": "A",
+   "score": 1.0,
+   "values": {
+    "n": 31,
+    "W": "Rohan",
+    "L": "Tara",
+    "win": "A",
+    "date": "2024-06-14",
+    "start_id": 12366,
+    "end_id": 12396,
+    "lens": [
+     12,
+     45,
+     50,
+     16,
+     21,
+     40,
+     24,
+     31,
+     42,
+     41,
+     20,
+     49,
+     38,
+     13,
+     63,
+     18,
+     34,
+     29,
+     34,
+     48,
+     50,
+     32,
+     34,
+     34,
+     37,
+     29,
+     57,
+     30,
+     6,
+     9,
+     23
+    ],
+    "reply_id": 12397,
+    "q": "hmm"
+   },
+   "quote_ids": [
+    12397
+   ],
+   "lines": [
+    "Rohan once sent 31 messages in a row. Tara replied 'hmm'.",
+    "31 messages in a row, from Rohan. Then silence. Then 'hmm'."
+   ]
+  },
+  {
+   "id": "longest_streak",
+   "pri": "P0",
+   "kind": "event",
+   "theme": "streak",
+   "valence": "F",
+   "spicy": false,
+   "subject": null,
+   "score": 1.0,
+   "values": {
+    "n": 183,
+    "start": "2024-02-02",
+    "end": "2024-08-02"
+   },
+   "quote_ids": [],
+   "lines": [
+    "183 days without missing a day. Neither of you has a hobby.",
+    "183 days in a row. Not one day off. Not one."
+   ]
+  },
+  {
+   "id": "peak_hour",
+   "pri": "P0",
+   "kind": "couple",
+   "theme": "time",
+   "valence": "N",
+   "spicy": false,
+   "subject": null,
+   "score": 1.0,
+   "values": {
+    "hour": 2,
+    "hour_label": "2 AM",
+    "share": 0.1053,
+    "pct": 10.5,
+    "night": true
+   },
+   "quote_ids": [],
+   "lines": [
+    "Most active hour: 2 AM. Sleep is for people with fewer feelings.",
+    "2 AM is your most active hour. We hope you have curtains.",
+    "Peak hour: 2 AM. Not a bug. A lifestyle."
+   ]
+  },
+  {
+   "id": "reply_median",
+   "pri": "P0",
+   "kind": "versus",
+   "theme": "speed",
+   "valence": "U",
+   "spicy": false,
+   "subject": "B",
+   "score": 1.0,
+   "values": {
+    "a": 100,
+    "b": 1375,
+    "W": "Tara",
+    "L": "Rohan",
+    "w": 1375,
+    "l": 100,
+    "r": 13.624,
+    "win": "B",
+    "slow": "Tara",
+    "fast": "Rohan",
+    "sec_slow": 1375,
+    "sec_fast": 100,
+    "sec_a": 100,
+    "sec_b": 1375,
+    "coarse": false,
+    "slow_side": "B"
+   },
+   "quote_ids": [],
+   "lines": [
+    "Rohan replies in 1m 40s. Tara replies in 23 min. Tara is 'busy.'",
+    "Tara takes 14× longer to reply. Somewhere, a notification is aging."
+   ]
+  },
+  {
+   "id": "bang_then_silence",
+   "pri": "P1",
+   "kind": "event",
+   "theme": "silence",
+   "valence": "U",
+   "spicy": true,
+   "subject": null,
+   "score": 0.95,
+   "values": {
+    "date": "2024-08-02",
+    "n": 1204,
+    "d": 6
+   },
+   "quote_ids": [],
+   "lines": [
+    "2 Aug 2024: 1,204 messages. Then 6 days of silence. We have questions."
+   ]
+  },
+  {
+   "id": "silence_breaker",
+   "pri": "P1",
+   "kind": "event",
+   "theme": "silence",
+   "valence": "U",
+   "spicy": true,
+   "subject": "A",
+   "score": 1.0,
+   "values": {
+    "k": 4,
+    "n": 4,
+    "W": "Rohan",
+    "L": "Tara",
+    "win": "A",
+    "all": true
+   },
+   "quote_ids": [],
+   "lines": [
+    "Rohan broke every silence over 2 days. 4 out of 4."
+   ]
+  },
+  {
+   "id": "ok_period",
+   "pri": "P1",
+   "kind": "versus",
+   "theme": "tone",
+   "valence": "U",
+   "spicy": false,
+   "subject": "B",
+   "score": 0.9834,
+   "values": {
+    "a": 3,
+    "b": 38,
+    "W": "Tara",
+    "L": "Rohan",
+    "w": 38,
+    "l": 3,
+    "r": 9.75,
+    "win": "B",
+    "n": 38,
+    "total": 41
+   },
+   "quote_ids": [],
+   "lines": [
+    "38 instances of 'ok.' with a full stop. We hope everyone's okay.",
+    "Tara has typed 'ok.' 38 times. That full stop is doing a lot of work.",
+    "A full stop after 'ok'. 38 times, from Tara. In a text message."
+   ]
+  },
+  {
+   "id": "first_ily",
+   "pri": "P0",
+   "kind": "event",
+   "theme": "milestone",
+   "valence": "F",
+   "spicy": false,
+   "subject": "B",
+   "score": 0.9,
+   "values": {
+    "n": 47,
+    "W": "Tara",
+    "L": "Rohan",
+    "win": "B",
+    "dur": 60,
+    "date": "2024-02-19",
+    "plot_twist": true,
+    "id": 3783
+   },
+   "quote_ids": [
+    3783
+   ],
+   "lines": [
+    "It took 47 days for someone to say 'I love you'. It was Tara. Plot twist.",
+    "47 days in, Tara said 'I love you' first. Rohan replied in 1 min.",
+    "'I love you' arrived on day 47. Sender: Tara. Cheers."
+   ]
+  },
+  {
+   "id": "pet_name",
+   "pri": "P1",
+   "kind": "couple",
+   "theme": "affection",
+   "valence": "F",
+   "spicy": false,
+   "subject": null,
+   "score": 1.0,
+   "values": {
+    "token": "babu",
+    "n": 1274,
+    "a": 981,
+    "b": 293
+   },
+   "quote_ids": [],
+   "lines": [
+    "'babu' appears 1,274 times. Pet names: a love story.",
+    "'babu', 1,274 times. At this point it's a legal name."
+   ]
+  },
+  {
+   "id": "signature_words",
+   "pri": "P0",
+   "kind": "versus",
+   "theme": "words",
+   "valence": "N",
+   "spicy": false,
+   "subject": null,
+   "score": 1.0,
+   "values": {
+    "a": [
+     "bro",
+     "scene",
+     "chalo",
+     "babu",
+     "sorry"
+    ],
+    "b": [
+     "hmm",
+     "nahi",
+     "acha",
+     "literally",
+     "lowkey"
+    ],
+    "A": "Rohan",
+    "B": "Tara"
+   },
+   "quote_ids": [],
+   "lines": [
+    "Rohan says 'bro', 'scene' and 'chalo'. Tara says 'hmm', 'nahi' and 'acha'. Distinct voices.",
+    "Words only Rohan says: bro, scene, chalo. Words only Tara says: hmm, nahi, acha."
+   ]
+  },
+  {
+   "id": "words_total_books",
+   "pri": "P1",
+   "kind": "couple",
+   "theme": "volume",
+   "valence": "N",
+   "spicy": false,
+   "subject": null,
+   "score": 1.0,
+   "values": {
+    "words": 283000,
+    "x": 6.0,
+    "book": "The Great Gatsby",
+    "unit": "Great Gatsbys",
+    "punch": "Old sport."
+   },
+   "quote_ids": [],
+   "lines": [
+    "283,000 words together. That's 6 Great Gatsbys. Old sport."
+   ]
+  },
+  {
+   "id": "double_texts",
+   "pri": "P1",
+   "kind": "versus",
+   "theme": "effort",
+   "valence": "N",
+   "spicy": false,
+   "subject": "A",
+   "score": 1.0,
+   "values": {
+    "a": 1067,
+    "b": 123,
+    "W": "Rohan",
+    "L": "Tara",
+    "w": 1067,
+    "l": 123,
+    "r": 8.613,
+    "win": "A",
+    "total": 1190
+   },
+   "quote_ids": [],
+   "lines": [
+    "Rohan double-texted 1,067 times. Tara did it 123. The thumbs have spoken."
+   ]
+  },
+  {
+   "id": "emoji_top",
+   "pri": "P0",
+   "kind": "couple",
+   "theme": "emoji",
+   "valence": "N",
+   "spicy": false,
+   "subject": null,
+   "score": 1.0,
+   "values": {
+    "emoji": "😭",
+    "n": 2341,
+    "a": 939,
+    "b": 1402
+   },
+   "quote_ids": [],
+   "lines": [
+    "😭 was used 2,341 times. It's basically a third participant.",
+    "Top emoji: 😭, 2,341 times. Feelings were expressed."
+   ]
+  },
+  {
+   "id": "longest_silence",
+   "pri": "P1",
+   "kind": "event",
+   "theme": "silence",
+   "valence": "U",
+   "spicy": false,
+   "subject": "A",
+   "score": 1.0,
+   "values": {
+    "d": 6,
+    "W": "Rohan",
+    "L": "Tara",
+    "win": "A",
+    "start": "2024-08-02",
+    "end": "2024-08-09"
+   },
+   "quote_ids": [],
+   "lines": [
+    "The longest silence lasted 6 days. Rohan broke it.",
+    "6 days without a word. Then Rohan said hi."
+   ]
+  },
+  {
+   "id": "triple_texts",
+   "pri": "P1",
+   "kind": "versus",
+   "theme": "clingy",
+   "valence": "U",
+   "spicy": true,
+   "subject": "A",
+   "score": 0.9985,
+   "values": {
+    "a": 129,
+    "b": 1,
+    "W": "Rohan",
+    "L": "Tara",
+    "w": 129,
+    "l": 1,
+    "r": 65.0,
+    "win": "A"
+   },
+   "quote_ids": [],
+   "lines": [
+    "Rohan has triple-texted 129 times. At that point it's a newsletter."
+   ]
+  },
+  {
+   "id": "busiest_day",
+   "pri": "P1",
+   "kind": "event",
+   "theme": "volume",
+   "valence": "N",
+   "spicy": false,
+   "subject": null,
+   "score": 1.0,
+   "values": {
+    "date": "2024-08-02",
+    "n": 1204,
+    "x": 17.2,
+    "median": 70
+   },
+   "quote_ids": [],
+   "lines": [
+    "2 Aug 2024: 1,204 messages in one day. That's 17.2× a normal day.",
+    "1,204 messages on 2 Aug 2024. Something happened."
+   ]
+  },
+  {
+   "id": "deleted",
+   "pri": "P1",
+   "kind": "versus",
+   "theme": "mystery",
+   "valence": "N",
+   "spicy": false,
+   "subject": "A",
+   "score": 0.9293,
+   "values": {
+    "a": 41,
+    "b": 12,
+    "W": "Rohan",
+    "L": "Tara",
+    "w": 41,
+    "l": 12,
+    "r": 3.231,
+    "win": "A",
+    "n": 53
+   },
+   "quote_ids": [],
+   "lines": [
+    "Rohan deleted 41 messages. Tara deleted 12. We'll never know."
+   ]
+  },
+  {
+   "id": "runtime_typing",
+   "pri": "P0",
+   "kind": "couple",
+   "theme": "volume",
+   "valence": "N",
+   "spicy": false,
+   "subject": null,
+   "score": 0.8588,
+   "values": {
+    "hours": 131,
+    "days": 5.5
+   },
+   "quote_ids": [],
+   "lines": [
+    "131 hours of typing. That's 5.5 days of your life, thumbs only.",
+    "Total typing time: 131 hours. The thumbs deserve a salary."
+   ]
+  },
+  {
+   "id": "first_message",
+   "pri": "P0",
+   "kind": "event",
+   "theme": "milestone",
+   "valence": "F",
+   "spicy": false,
+   "subject": "A",
+   "score": 0.8,
+   "values": {
+    "W": "Rohan",
+    "L": "Tara",
+    "win": "A",
+    "date": "2024-01-03",
+    "q": "hi, is this Tara?"
+   },
+   "quote_ids": [
+    0
+   ],
+   "lines": [
+    "First message ever: 'hi, is this Tara?' Look at you now."
+   ]
+  },
+  {
+   "id": "reel_dealer",
+   "pri": "P1",
+   "kind": "versus",
+   "theme": "media",
+   "valence": "N",
+   "spicy": false,
+   "subject": "A",
+   "score": 0.9516,
+   "values": {
+    "a": 420,
+    "b": 90,
+    "W": "Rohan",
+    "L": "Tara",
+    "w": 420,
+    "l": 90,
+    "r": 4.626,
+    "win": "A",
+    "reels": true
+   },
+   "quote_ids": [],
+   "lines": [
+    "Rohan has sent 420 links. Tara: 90. Reels are a love language now."
+   ]
+  },
+  {
+   "id": "voice_notes",
+   "pri": "P2",
+   "kind": "versus",
+   "theme": "media",
+   "valence": "N",
+   "spicy": false,
+   "subject": "B",
+   "score": 0.9883,
+   "values": {
+    "a": 18,
+    "b": 160,
+    "W": "Tara",
+    "L": "Rohan",
+    "w": 160,
+    "l": 18,
+    "r": 8.474,
+    "win": "B"
+   },
+   "quote_ids": [],
+   "lines": [
+    "Tara sent 160 voice notes. Rohan sent 18. One of you has heard of typing."
+   ]
+  },
+  {
+   "id": "who_is_that",
+   "pri": "P2",
+   "kind": "versus",
+   "theme": "clingy",
+   "valence": "N",
+   "spicy": true,
+   "subject": "B",
+   "score": 0.7769,
+   "values": {
+    "a": 3,
+    "b": 27,
+    "W": "Tara",
+    "L": "Rohan",
+    "w": 27,
+    "l": 3,
+    "r": 7.0,
+    "win": "B"
+   },
+   "quote_ids": [],
+   "lines": [
+    "Tara has asked 'who is' 27 times. Rohan has asked it 3."
+   ]
+  },
+  {
+   "id": "message_milestones",
+   "pri": "P1",
+   "kind": "event",
+   "theme": "milestone",
+   "valence": "F",
+   "spicy": false,
+   "subject": "B",
+   "score": 0.7,
+   "values": {
+    "n": 5000,
+    "W": "Tara",
+    "L": "Rohan",
+    "win": "B",
+    "date": "2024-03-03",
+    "id": 4999,
+    "q": "i need coffee immediately"
+   },
+   "quote_ids": [
+    4999
+   ],
+   "lines": [
+    "Message #5,000: 'i need coffee immediately'. Poetic.",
+    "The 5,000th message was sent by Tara on 3 Mar 2024. It said 'i need coffee immediately'."
+   ]
+  },
+  {
+   "id": "left_hanging",
+   "pri": "P2",
+   "kind": "versus",
+   "theme": "speed",
+   "valence": "N",
+   "spicy": false,
+   "subject": "A",
+   "score": 0.9834,
+   "values": {
+    "a": 70,
+    "b": 12,
+    "W": "Rohan",
+    "L": "Tara",
+    "w": 70,
+    "l": 12,
+    "r": 5.462,
+    "win": "A"
+   },
+   "quote_ids": [],
+   "lines": [
+    "Rohan has ended 70 conversations with a question nobody answered. Hello? Hello?"
+   ]
+  },
+  {
+   "id": "fight_days",
+   "pri": "P2",
+   "kind": "event",
+   "theme": "apology",
+   "valence": "U",
+   "spicy": true,
+   "subject": null,
+   "score": 0.8,
+   "values": {
+    "n": 1,
+    "a_first": 1,
+    "b_first": 0,
+    "A": "Rohan",
+    "B": "Tara"
+   },
+   "quote_ids": [],
+   "lines": [
+    "Days that looked like fights: 1. First to apologize: Rohan 1, Tara 0."
+   ]
+  },
+  {
+   "id": "messages_total",
+   "pri": "P0",
+   "kind": "couple",
+   "theme": "volume",
+   "valence": "N",
+   "spicy": false,
+   "subject": null,
+   "score": 0.982,
+   "values": {
+    "n": 47382
+   },
+   "quote_ids": [],
+   "lines": [
+    "47,382 messages. Somebody's thumbs deserve a day off.",
+    "47,382 messages and counting. Please seek daylight."
+   ]
+  },
+  {
+   "id": "night_owl_share",
+   "pri": "P0",
+   "kind": "couple",
+   "theme": "time",
+   "valence": "N",
+   "spicy": false,
+   "subject": null,
+   "score": 0.6957,
+   "values": {
+    "pct": 34,
+    "a_pct": 34,
+    "b_pct": 34,
+    "W": "Tara",
+    "pct_w": 34,
+    "win": "B"
+   },
+   "quote_ids": [],
+   "lines": [
+    "34% of your messages are sent between midnight and 5 AM. Concerning, but respectable.",
+    "Tara sends 34% of their messages after midnight. Sleep is optional, apparently."
+   ]
+  },
+  {
+   "id": "span_days",
+   "pri": "P0",
+   "kind": "couple",
+   "theme": "volume",
+   "valence": "N",
+   "spicy": false,
+   "subject": null,
+   "score": 0.9658,
+   "values": {
+    "n": 659,
+    "start": "2024-01-03",
+    "end": "2025-10-23"
+   },
+   "quote_ids": [],
+   "lines": [
+    "659 days of chat. Longer than most gym memberships.",
+    "659 days in, and the notifications have not stopped."
+   ]
+  },
+  {
+   "id": "clingy_pings",
+   "pri": "P1",
+   "kind": "versus",
+   "theme": "clingy",
+   "valence": "U",
+   "spicy": true,
+   "subject": "A",
+   "score": 0.5462,
+   "values": {
+    "a": 553,
+    "b": 229,
+    "W": "Rohan",
+    "L": "Tara",
+    "w": 553,
+    "l": 229,
+    "r": 2.409,
+    "win": "A"
+   },
+   "quote_ids": [],
+   "lines": [
+    "Rohan has sent a 'hello?'-style ping 553 times. Tara: 229. One of you is watching the phone."
+   ]
+  },
+  {
+   "id": "initiator",
+   "pri": "P0",
+   "kind": "versus",
+   "theme": "effort",
+   "valence": "F",
+   "spicy": false,
+   "subject": "A",
+   "score": 0.5033,
+   "values": {
+    "a": 1204,
+    "b": 535,
+    "W": "Rohan",
+    "L": "Tara",
+    "w": 1204,
+    "l": 535,
+    "r": 2.248,
+    "win": "A",
+    "k": 7,
+    "pct": 69
+   },
+   "quote_ids": [],
+   "lines": [
+    "Rohan says hi first slightly more often. The race is on."
+   ]
+  },
+  {
+   "id": "last_word",
+   "pri": "P2",
+   "kind": "versus",
+   "theme": "effort",
+   "valence": "N",
+   "spicy": false,
+   "subject": "A",
+   "score": 0.887,
+   "values": {
+    "a": 1263,
+    "b": 476,
+    "W": "Rohan",
+    "L": "Tara",
+    "w": 1263,
+    "l": 476,
+    "r": 2.65,
+    "win": "A"
+   },
+   "quote_ids": [],
+   "lines": [
+    "Rohan gets the last word in 73% of your conversations. Tara has stopped arguing."
+   ]
+  },
+  {
+   "id": "affection_count",
+   "pri": "P1",
+   "kind": "versus",
+   "theme": "affection",
+   "valence": "F",
+   "spicy": false,
+   "subject": "A",
+   "score": 0.5748,
+   "values": {
+    "a": 1535,
+    "b": 608,
+    "W": "Rohan",
+    "L": "Tara",
+    "w": 1535,
+    "l": 608,
+    "r": 2.522,
+    "win": "A"
+   },
+   "quote_ids": [],
+   "lines": [
+    "Rohan got sweet 1,535 times. Tara: 608. Romance is not a competition. (It is.)"
+   ]
+  },
+  {
+   "id": "msgs_per_day",
+   "pri": "P1",
+   "kind": "couple",
+   "theme": "volume",
+   "valence": "N",
+   "spicy": false,
+   "subject": null,
+   "score": 0.8899,
+   "values": {
+    "n": 72
+   },
+   "quote_ids": [],
+   "lines": [
+    "72 messages a day. On average. Every single day.",
+    "72 messages a day. That is a lot of typing for two people who live in the same timezone."
+   ]
+  },
+  {
+   "id": "makes_laugh",
+   "pri": "P1",
+   "kind": "versus",
+   "theme": "affection",
+   "valence": "F",
+   "spicy": false,
+   "subject": "B",
+   "score": 0.5034,
+   "values": {
+    "a": 75,
+    "b": 141,
+    "W": "Tara",
+    "L": "Rohan",
+    "w": 141,
+    "l": 75,
+    "r": 1.868,
+    "win": "B"
+   },
+   "quote_ids": [],
+   "lines": [
+    "Tara makes Rohan laugh nearly 2× as often as the reverse. Funniest in the house."
+   ]
+  },
+  {
+   "id": "questions",
+   "pri": "P2",
+   "kind": "versus",
+   "theme": "effort",
+   "valence": "F",
+   "spicy": false,
+   "subject": "A",
+   "score": 0.5751,
+   "values": {
+    "a": 1218,
+    "b": 647,
+    "W": "Rohan",
+    "L": "Tara",
+    "w": 1218,
+    "l": 647,
+    "r": 1.881,
+    "win": "A"
+   },
+   "quote_ids": [],
+   "lines": [
+    "Rohan asked 1,218 questions. Tara asked 647. One of you is curious. One of you is tired."
+   ]
+  },
+  {
+   "id": "night_starter",
+   "pri": "P2",
+   "kind": "versus",
+   "theme": "clingy",
+   "valence": "N",
+   "spicy": true,
+   "subject": "A",
+   "score": 0.5174,
+   "values": {
+    "a": 429,
+    "b": 186,
+    "W": "Rohan",
+    "L": "Tara",
+    "w": 429,
+    "l": 186,
+    "r": 2.299,
+    "win": "A"
+   },
+   "quote_ids": [],
+   "lines": [
+    "Rohan started 429 conversations after midnight. Tara: 186. Nothing good happens at 2 AM."
+   ]
+  },
+  {
+   "id": "goodnight_ritual",
+   "pri": "P2",
+   "kind": "versus",
+   "theme": "affection",
+   "valence": "F",
+   "spicy": false,
+   "subject": "A",
+   "score": 0.4065,
+   "values": {
+    "a": 157,
+    "b": 81,
+    "W": "Rohan",
+    "L": "Tara",
+    "w": 157,
+    "l": 81,
+    "r": 1.927,
+    "win": "A"
+   },
+   "quote_ids": [],
+   "lines": [
+    "Rohan said goodnight 157 times. Tara: 81. Rituals matter."
+   ]
+  },
+  {
+   "id": "emoji_per_person",
+   "pri": "P1",
+   "kind": "versus",
+   "theme": "emoji",
+   "valence": "N",
+   "spicy": false,
+   "subject": "B",
+   "score": 0.3454,
+   "values": {
+    "a": 0.091,
+    "b": 0.133,
+    "W": "Tara",
+    "L": "Rohan",
+    "w": 0.133,
+    "l": 0.091,
+    "r": 1.462,
+    "win": "B",
+    "top_a": "😭",
+    "top_b": "😭"
+   },
+   "quote_ids": [],
+   "lines": [
+    "Tara and Rohan both reach for 😭 first. Matching moods, apparently."
+   ]
+  },
+  {
+   "id": "swearing",
+   "pri": "P1",
+   "kind": "couple",
+   "theme": "tone",
+   "valence": "N",
+   "spicy": false,
+   "subject": null,
+   "score": 0.4323,
+   "values": {
+    "n": 310,
+    "rate": 1.1,
+    "letter": "PG"
+   },
+   "quote_ids": [],
+   "lines": [
+    "310 naughty words in total. Mild, but noted.",
+    "Your chat is rated PG. Wholesome-ish."
+   ]
+  },
+  {
+   "id": "one_word_replies",
+   "pri": "P2",
+   "kind": "versus",
+   "theme": "effort",
+   "valence": "N",
+   "spicy": false,
+   "subject": "B",
+   "score": 0.2497,
+   "values": {
+    "a": 0.171,
+    "b": 0.255,
+    "W": "Tara",
+    "L": "Rohan",
+    "w": 0.255,
+    "l": 0.171,
+    "r": 1.495,
+    "win": "B",
+    "pct": 25
+   },
+   "quote_ids": [],
+   "lines": [
+    "25% of Tara's messages are one word or less. Efficient. Terrifying."
+   ]
+  },
+  {
+   "id": "words_per_message",
+   "pri": "P1",
+   "kind": "versus",
+   "theme": "effort",
+   "valence": "N",
+   "spicy": false,
+   "subject": "A",
+   "score": 0.1963,
+   "values": {
+    "a": 6.7,
+    "b": 5.4,
+    "W": "Rohan",
+    "L": "Tara",
+    "w": 6.7,
+    "l": 5.4,
+    "r": 1.241,
+    "win": "A"
+   },
+   "quote_ids": [],
+   "lines": [
+    "Rohan averages 6.7 words per message. Tara: 5.4. One of you writes. One of you texts."
+   ]
+  },
+  {
+   "id": "early_bird",
+   "pri": "P2",
+   "kind": "versus",
+   "theme": "time",
+   "valence": "F",
+   "spicy": false,
+   "subject": "A",
+   "score": 0.1711,
+   "values": {
+    "a": 0.059,
+    "b": 0.045,
+    "W": "Rohan",
+    "L": "Tara",
+    "w": 0.059,
+    "l": 0.045,
+    "r": 1.317,
+    "win": "A",
+    "pct": 6
+   },
+   "quote_ids": [],
+   "lines": [
+    "Rohan sends 6% of their messages before 9 AM. Disturbing."
+   ]
+  },
+  {
+   "id": "message_share",
+   "pri": "P1",
+   "kind": "versus",
+   "theme": "effort",
+   "valence": "N",
+   "spicy": false,
+   "subject": "A",
+   "score": 0.2519,
+   "values": {
+    "a": 28429,
+    "b": 18953,
+    "W": "Rohan",
+    "L": "Tara",
+    "w": 28429,
+    "l": 18953,
+    "r": 1.5,
+    "win": "A",
+    "pct": 60
+   },
+   "quote_ids": [],
+   "lines": [
+    "Rohan sends a little more than half the messages. The rest is commentary.",
+    "Rohan sends 60% of the messages. Tara sends the quality control."
+   ]
+  },
+  {
+   "id": "reply_fast_share",
+   "pri": "P2",
+   "kind": "versus",
+   "theme": "speed",
+   "valence": "F",
+   "spicy": false,
+   "subject": "A",
+   "score": 0.1825,
+   "values": {
+    "a": 0.325,
+    "b": 0.266,
+    "W": "Rohan",
+    "L": "Tara",
+    "w": 0.325,
+    "l": 0.266,
+    "r": 1.222,
+    "win": "A",
+    "pct": 33
+   },
+   "quote_ids": [],
+   "lines": [
+    "33% of Rohan's replies arrive in under a minute. The phone never leaves the hand."
+   ]
+  }
+ ],
+ "poster": {
+  "title": {
+   "text": "SORRY 214",
+   "stat": "apologies"
+  },
+  "tagline": "47,382 messages. 659 days. Zero chill.",
+  "laurel": {
+   "text": "WINNER · LONGEST STREAK · 183 DAYS",
+   "stat": "longest_streak"
+  },
+  "top_critic": {
+   "stars": 5,
+   "line": "It took 47 days for someone to say 'I love you'. It was Tara. Plot twist.",
+   "source": "The First Message",
+   "stat": "first_ily"
+  },
+  "critics": [
+   {
+    "stars": 4,
+    "line": "Rohan once sent 31 messages in a row. Tara replied 'hmm'.",
+    "source": "The Space Bar",
+    "stat": "longest_monologue",
+    "theme": "effort",
+    "valence": "N",
+    "subject": "A"
+   },
+   {
+    "stars": 1,
+    "line": "Rohan replies in 1m 40s. Tara replies in 23 min. Tara is 'busy.'",
+    "source": "Tara's Notification Tray",
+    "stat": "reply_median",
+    "theme": "speed",
+    "valence": "U",
+    "subject": "B"
+   }
+  ],
+  "billing": [
+   {
+    "side": "A",
+    "name": "ROHAN",
+    "archetype": "THE DOUBLE TEXTER"
+   },
+   {
+    "side": "B",
+    "name": "TARA",
+    "archetype": "THE GHOST"
+   }
+  ],
+  "release": "IN CHATS SINCE 3 JAN 2024",
+  "runtime": "131 HRS (OF TYPING)",
+  "rating": {
+   "letter": "PG-13",
+   "reasons": [
+    "excessive use of \"babu\"",
+    "38 passive-aggressive \"ok.\"s",
+    "214 apologies",
+    "mild emotional damage"
+   ],
+   "text": "[PG-13] for excessive use of \"babu\", 38 passive-aggressive \"ok.\"s, 214 apologies and mild emotional damage"
+  },
+  "fine_print": [
+   "THE FOLLOWING POSTER HAS BEEN APPROVED FOR ALL AUDIENCES EXCEPT YOUR PARENTS.",
+   "No chats were stored in the making of this poster."
+  ],
+  "heartbeat": [
+   2177,
+   2563,
+   2467,
+   2076,
+   2119,
+   2153,
+   2282,
+   2872,
+   2199,
+   2190,
+   1980,
+   2252,
+   2219,
+   1680,
+   2216,
+   2006,
+   2103,
+   2124,
+   2113,
+   2126,
+   1816,
+   1649
+  ],
+  "alternatives": [
+   {
+    "stars": 4,
+    "line": "Peak hour: 2 AM. Not a bug. A lifestyle.",
+    "source": "Their Alarm Clock",
+    "stat": "peak_hour",
+    "theme": "time",
+    "valence": "N",
+    "subject": null
+   },
+   {
+    "stars": 1,
+    "line": "Rohan broke every silence over 2 days. 4 out of 4.",
+    "source": "Last Seen",
+    "stat": "silence_breaker",
+    "theme": "silence",
+    "valence": "U",
+    "subject": "A"
+   },
+   {
+    "stars": 1,
+    "line": "2 Aug 2024: 1,204 messages. Then 6 days of silence. We have questions.",
+    "source": "The Void",
+    "stat": "bang_then_silence",
+    "theme": "silence",
+    "valence": "U",
+    "subject": null
+   },
+   {
+    "stars": 4,
+    "line": "Words only Rohan says: bro, scene, chalo. Words only Tara says: hmm, nahi, acha.",
+    "source": "The Thesaurus",
+    "stat": "signature_words",
+    "theme": "words",
+    "valence": "N",
+    "subject": null
+   },
+   {
+    "stars": 4,
+    "line": "283,000 words together. That's 6 Great Gatsbys. Old sport.",
+    "source": "The Keyboard",
+    "stat": "words_total_books",
+    "theme": "volume",
+    "valence": "N",
+    "subject": null
+   },
+   {
+    "stars": 1,
+    "line": "The longest silence lasted 6 days. Rohan broke it.",
+    "source": "Last Seen",
+    "stat": "longest_silence",
+    "theme": "silence",
+    "valence": "U",
+    "subject": "A"
+   },
+   {
+    "stars": 1,
+    "line": "Rohan has triple-texted 129 times. At that point it's a newsletter.",
+    "source": "Last Seen",
+    "stat": "triple_texts",
+    "theme": "clingy",
+    "valence": "U",
+    "subject": "A"
+   },
+   {
+    "stars": 4,
+    "line": "1,204 messages on 2 Aug 2024. Something happened.",
+    "source": "The Keyboard",
+    "stat": "busiest_day",
+    "theme": "volume",
+    "valence": "N",
+    "subject": null
+   },
+   {
+    "stars": 4,
+    "line": "Rohan has sent 420 links. Tara: 90. Reels are a love language now.",
+    "source": "Their Camera Roll",
+    "stat": "reel_dealer",
+    "theme": "media",
+    "valence": "N",
+    "subject": "A"
+   },
+   {
+    "stars": 4,
+    "line": "Tara sent 160 voice notes. Rohan sent 18. One of you has heard of typing.",
+    "source": "Their Camera Roll",
+    "stat": "voice_notes",
+    "theme": "media",
+    "valence": "N",
+    "subject": "B"
+   }
+  ]
+ },
+ "meters": {
+  "love": {
+   "A": 73.0,
+   "B": 27.0,
+   "components": [
+    {
+     "key": "affection",
+     "weight": 0.333,
+     "a": 1535,
+     "b": 608,
+     "share_a": 0.716
+    },
+    {
+     "key": "initiation",
+     "weight": 0.222,
+     "a": 1204,
+     "b": 535,
+     "share_a": 0.692
+    },
+    {
+     "key": "reply_speed",
+     "weight": 0.167,
+     "a": 0.01,
+     "b": 0.0007,
+     "share_a": 0.932
+    },
+    {
+     "key": "words",
+     "weight": 0.111,
+     "a": 185571,
+     "b": 97405,
+     "share_a": 0.656
+    },
+    {
+     "key": "questions",
+     "weight": 0.111,
+     "a": 1218,
+     "b": 647,
+     "share_a": 0.653
+    },
+    {
+     "key": "goodnights",
+     "weight": 0.056,
+     "a": 157,
+     "b": 81,
+     "share_a": 0.658
+    }
+   ],
+   "lead": "A",
+   "band": "clear",
+   "verdict": "Rohan shows more, in text. That is all this measures.",
+   "subtitle": "text effort"
+  },
+  "clingy": {
+   "A": 83.6,
+   "B": 16.4,
+   "components": [
+    {
+     "key": "double_texts",
+     "weight": 0.25,
+     "a": 37.5321,
+     "b": 6.4897,
+     "share_a": 0.853
+    },
+    {
+     "key": "pings",
+     "weight": 0.2,
+     "a": 19.452,
+     "b": 12.0825,
+     "share_a": 0.617
+    },
+    {
+     "key": "triple_texts",
+     "weight": 0.15,
+     "a": 4.5376,
+     "b": 0.0528,
+     "share_a": 0.989
+    },
+    {
+     "key": "silence_breaking",
+     "weight": 0.15,
+     "a": 0.1407,
+     "b": 0.0,
+     "share_a": 1.0
+    },
+    {
+     "key": "apologies",
+     "weight": 0.15,
+     "a": 7.5275,
+     "b": 0.4749,
+     "share_a": 0.941
+    },
+    {
+     "key": "night_starts",
+     "weight": 0.1,
+     "a": 15.0902,
+     "b": 9.8137,
+     "share_a": 0.606
+    }
+   ],
+   "lead": "A",
+   "labels": {
+    "A": "Level: Notification Enthusiast",
+    "B": "Level: Phone Face-Down"
+   },
+   "subtitle": "rates per 1,000 of their own messages"
+  }
+ },
+ "archetypes": {
+  "A": {
+   "key": "double_texter",
+   "name": "THE DOUBLE TEXTER",
+   "blurb": "Sends the follow-up. Always.",
+   "valence": "N",
+   "score": 1.0,
+   "top": [
+    {
+     "key": "double_texter",
+     "name": "THE DOUBLE TEXTER",
+     "score": 1.0
+    },
+    {
+     "key": "apologist",
+     "name": "THE APOLOGIST",
+     "score": 0.976
+    },
+    {
+     "key": "reel",
+     "name": "THE REEL DEALER",
+     "score": 0.952
+    }
+   ]
+  },
+  "B": {
+   "key": "ghost",
+   "name": "THE GHOST",
+   "blurb": "Present, in the way weather is present.",
+   "valence": "U",
+   "score": 0.964,
+   "top": [
+    {
+     "key": "ghost",
+     "name": "THE GHOST",
+     "score": 0.964
+    },
+    {
+     "key": "voice",
+     "name": "THE VOICE-NOTE ENTHUSIAST",
+     "score": 0.949
+    },
+    {
+     "key": "comedian",
+     "name": "THE COMEDIAN",
+     "score": 0.378
+    }
+   ]
+  }
+ },
+ "words": {
+  "dueling": {
+   "A": [
+    {
+     "w": "bro",
+     "z": 14.96,
+     "nA": 1200,
+     "nB": 12
+    },
+    {
+     "w": "scene",
+     "z": 10.93,
+     "nA": 520,
+     "nB": 10
+    },
+    {
+     "w": "chalo",
+     "z": 10.27,
+     "nA": 480,
+     "nB": 8
+    },
+    {
+     "w": "babu",
+     "z": 9.4,
+     "nA": 981,
+     "nB": 293
+    },
+    {
+     "w": "sorry",
+     "z": 7.81,
+     "nA": 223,
+     "nB": 9
+    },
+    {
+     "w": "wait",
+     "z": 7.36,
+     "nA": 539,
+     "nB": 153
+    },
+    {
+     "w": "bike",
+     "z": 7.13,
+     "nA": 441,
+     "nB": 117
+    },
+    {
+     "w": "noise",
+     "z": 5.48,
+     "nA": 223,
+     "nB": 54
+    },
+    {
+     "w": "team",
+     "z": 5.19,
+     "nA": 381,
+     "nB": 124
+    },
+    {
+     "w": "aaj",
+     "z": 5.14,
+     "nA": 96,
+     "nB": 4
+    },
+    {
+     "w": "hanging",
+     "z": 5.04,
+     "nA": 217,
+     "nB": 57
+    },
+    {
+     "w": "🥺",
+     "z": 5.04,
+     "nA": 282,
+     "nB": 0
+    },
+    {
+     "w": "code",
+     "z": 5.01,
+     "nA": 211,
+     "nB": 55
+    },
+    {
+     "w": "hours",
+     "z": 4.97,
+     "nA": 210,
+     "nB": 55
+    },
+    {
+     "w": "full",
+     "z": 4.92,
+     "nA": 92,
+     "nB": 3
+    },
+    {
+     "w": "review",
+     "z": 4.91,
+     "nA": 554,
+     "nB": 207
+    },
+    {
+     "w": "phir",
+     "z": 4.86,
+     "nA": 103,
+     "nB": 2
+    },
+    {
+     "w": "standup",
+     "z": 4.76,
+     "nA": 216,
+     "nB": 60
+    },
+    {
+     "w": "walk",
+     "z": 4.76,
+     "nA": 216,
+     "nB": 60
+    },
+    {
+     "w": "leg",
+     "z": 4.72,
+     "nA": 215,
+     "nB": 60
+    },
+    {
+     "w": "fix",
+     "z": 4.64,
+     "nA": 227,
+     "nB": 66
+    },
+    {
+     "w": "due",
+     "z": 4.58,
+     "nA": 218,
+     "nB": 63
+    },
+    {
+     "w": "service",
+     "z": 4.58,
+     "nA": 218,
+     "nB": 63
+    },
+    {
+     "w": "fifa",
+     "z": 4.58,
+     "nA": 201,
+     "nB": 56
+    },
+    {
+     "w": "guys",
+     "z": 4.58,
+     "nA": 201,
+     "nB": 56
+    },
+    {
+     "w": "email",
+     "z": 4.52,
+     "nA": 341,
+     "nB": 117
+    },
+    {
+     "w": "sprint",
+     "z": 4.47,
+     "nA": 203,
+     "nB": 58
+    },
+    {
+     "w": "headphones",
+     "z": 4.42,
+     "nA": 199,
+     "nB": 57
+    },
+    {
+     "w": "went",
+     "z": 4.4,
+     "nA": 492,
+     "nB": 188
+    },
+    {
+     "w": "debugging",
+     "z": 4.4,
+     "nA": 208,
+     "nB": 61
+    },
+    {
+     "w": "ordered",
+     "z": 4.38,
+     "nA": 198,
+     "nB": 57
+    },
+    {
+     "w": "broke",
+     "z": 4.36,
+     "nA": 214,
+     "nB": 64
+    },
+    {
+     "w": "❤️",
+     "z": 4.28,
+     "nA": 324,
+     "nB": 113
+    },
+    {
+     "w": "update",
+     "z": 4.27,
+     "nA": 214,
+     "nB": 65
+    },
+    {
+     "w": "set",
+     "z": 4.25,
+     "nA": 96,
+     "nB": 1
+    },
+    {
+     "w": "match",
+     "z": 4.24,
+     "nA": 187,
+     "nB": 54
+    },
+    {
+     "w": "day",
+     "z": 4.23,
+     "nA": 867,
+     "nB": 372
+    },
+    {
+     "w": "😅",
+     "z": 4.19,
+     "nA": 195,
+     "nB": 0
+    },
+    {
+     "w": "night",
+     "z": 4.12,
+     "nA": 212,
+     "nB": 66
+    },
+    {
+     "w": "minutes",
+     "z": 4.08,
+     "nA": 570,
+     "nB": 231
+    }
+   ],
+   "B": [
+    {
+     "w": "hmm",
+     "z": -25.99,
+     "nA": 32,
+     "nB": 1499
+    },
+    {
+     "w": "😭",
+     "z": -23.71,
+     "nA": 939,
+     "nB": 1402
+    },
+    {
+     "w": "nahi",
+     "z": -22.86,
+     "nA": 112,
+     "nB": 641
+    },
+    {
+     "w": "acha",
+     "z": -21.47,
+     "nA": 74,
+     "nB": 575
+    },
+    {
+     "w": "literally",
+     "z": -18.93,
+     "nA": 20,
+     "nB": 711
+    },
+    {
+     "w": "lowkey",
+     "z": -13.24,
+     "nA": 8,
+     "nB": 408
+    },
+    {
+     "w": "theek",
+     "z": -10.51,
+     "nA": 94,
+     "nB": 196
+    },
+    {
+     "w": "pata",
+     "z": -10.05,
+     "nA": 20,
+     "nB": 125
+    },
+    {
+     "w": "nice",
+     "z": -5.98,
+     "nA": 280,
+     "nB": 261
+    },
+    {
+     "w": "stop",
+     "z": -5.87,
+     "nA": 89,
+     "nB": 114
+    },
+    {
+     "w": "haan",
+     "z": -5.61,
+     "nA": 148,
+     "nB": 157
+    },
+    {
+     "w": "🙄",
+     "z": -5.22,
+     "nA": 0,
+     "nB": 201
+    },
+    {
+     "w": "arre",
+     "z": -5.16,
+     "nA": 152,
+     "nB": 153
+    },
+    {
+     "w": "ohh",
+     "z": -4.9,
+     "nA": 264,
+     "nB": 229
+    },
+    {
+     "w": "pilates",
+     "z": -4.79,
+     "nA": 106,
+     "nB": 113
+    },
+    {
+     "w": "oh",
+     "z": -4.6,
+     "nA": 358,
+     "nB": 287
+    },
+    {
+     "w": "😴",
+     "z": -4.39,
+     "nA": 0,
+     "nB": 142
+    },
+    {
+     "w": "🙈",
+     "z": -4.39,
+     "nA": 0,
+     "nB": 142
+    },
+    {
+     "w": "maybe",
+     "z": -4.18,
+     "nA": 82,
+     "nB": 87
+    },
+    {
+     "w": "makes",
+     "z": -4.09,
+     "nA": 78,
+     "nB": 83
+    },
+    {
+     "w": "sense",
+     "z": -4.09,
+     "nA": 78,
+     "nB": 83
+    },
+    {
+     "w": "baat",
+     "z": -4.07,
+     "nA": 77,
+     "nB": 82
+    },
+    {
+     "w": "oof",
+     "z": -4.05,
+     "nA": 76,
+     "nB": 81
+    },
+    {
+     "w": "bas",
+     "z": -3.95,
+     "nA": 179,
+     "nB": 154
+    },
+    {
+     "w": "sure",
+     "z": -3.89,
+     "nA": 89,
+     "nB": 89
+    },
+    {
+     "w": "yay",
+     "z": -3.85,
+     "nA": 83,
+     "nB": 84
+    },
+    {
+     "w": "kyun",
+     "z": -3.83,
+     "nA": 90,
+     "nB": 89
+    },
+    {
+     "w": "leave",
+     "z": -3.74,
+     "nA": 2,
+     "nB": 18
+    },
+    {
+     "w": "nope",
+     "z": -3.74,
+     "nA": 82,
+     "nB": 82
+    },
+    {
+     "w": "uff",
+     "z": -3.74,
+     "nA": 74,
+     "nB": 76
+    },
+    {
+     "w": "club",
+     "z": -3.69,
+     "nA": 106,
+     "nB": 99
+    },
+    {
+     "w": "omg",
+     "z": -3.62,
+     "nA": 81,
+     "nB": 80
+    },
+    {
+     "w": "headache",
+     "z": -3.62,
+     "nA": 117,
+     "nB": 106
+    },
+    {
+     "w": "exactly",
+     "z": -3.6,
+     "nA": 80,
+     "nB": 79
+    },
+    {
+     "w": "god",
+     "z": -3.55,
+     "nA": 70,
+     "nB": 71
+    },
+    {
+     "w": "true",
+     "z": -3.5,
+     "nA": 87,
+     "nB": 83
+    },
+    {
+     "w": "tomorrow",
+     "z": -3.49,
+     "nA": 467,
+     "nB": 334
+    },
+    {
+     "w": "colour",
+     "z": -3.48,
+     "nA": 131,
+     "nB": 114
+    },
+    {
+     "w": "hated",
+     "z": -3.48,
+     "nA": 131,
+     "nB": 114
+    },
+    {
+     "w": "made",
+     "z": -3.47,
+     "nA": 121,
+     "nB": 107
+    }
+   ]
+  },
+  "shared": [
+   {
+    "w": "today",
+    "nA": 2257,
+    "nB": 1126
+   },
+   {
+    "w": "😭",
+    "nA": 939,
+    "nB": 1402
+   },
+   {
+    "w": "never",
+    "nA": 1362,
+    "nB": 736
+   },
+   {
+    "w": "honestly",
+    "nA": 1300,
+    "nB": 608
+   },
+   {
+    "w": "office",
+    "nA": 1143,
+    "nB": 530
+   },
+   {
+    "w": "call",
+    "nA": 1127,
+    "nB": 525
+   },
+   {
+    "w": "anyway",
+    "nA": 966,
+    "nB": 470
+   },
+   {
+    "w": "tonight",
+    "nA": 780,
+    "nB": 469
+   },
+   {
+    "w": "free",
+    "nA": 926,
+    "nB": 453
+   },
+   {
+    "w": "finally",
+    "nA": 903,
+    "nB": 440
+   },
+   {
+    "w": "😂",
+    "nA": 789,
+    "nB": 392
+   },
+   {
+    "w": "day",
+    "nA": 867,
+    "nB": 372
+   },
+   {
+    "w": "later",
+    "nA": 635,
+    "nB": 366
+   },
+   {
+    "w": "home",
+    "nA": 668,
+    "nB": 346
+   },
+   {
+    "w": "mind",
+    "nA": 571,
+    "nB": 339
+   },
+   {
+    "w": "tomorrow",
+    "nA": 467,
+    "nB": 334
+   },
+   {
+    "w": "please",
+    "nA": 637,
+    "nB": 332
+   },
+   {
+    "w": "book",
+    "nA": 522,
+    "nB": 318
+   },
+   {
+    "w": "morning",
+    "nA": 486,
+    "nB": 317
+   },
+   {
+    "w": "talk",
+    "nA": 614,
+    "nB": 298
+   },
+   {
+    "w": "tired",
+    "nA": 490,
+    "nB": 294
+   },
+   {
+    "w": "babu",
+    "nA": 981,
+    "nB": 293
+   },
+   {
+    "w": "oh",
+    "nA": 358,
+    "nB": 287
+   },
+   {
+    "w": "order",
+    "nA": 460,
+    "nB": 280
+   },
+   {
+    "w": "doing",
+    "nA": 543,
+    "nB": 278
+   },
+   {
+    "w": "being",
+    "nA": 499,
+    "nB": 277
+   },
+   {
+    "w": "last",
+    "nA": 590,
+    "nB": 276
+   },
+   {
+    "w": "reached",
+    "nA": 548,
+    "nB": 274
+   },
+   {
+    "w": "come",
+    "nA": 476,
+    "nB": 264
+   },
+   {
+    "w": "dramatic",
+    "nA": 458,
+    "nB": 261
+   },
+   {
+    "w": "nice",
+    "nA": 280,
+    "nB": 261
+   },
+   {
+    "w": "minute",
+    "nA": 359,
+    "nB": 260
+   },
+   {
+    "w": "send",
+    "nA": 550,
+    "nB": 260
+   },
+   {
+    "w": "everything",
+    "nA": 621,
+    "nB": 258
+   },
+   {
+    "w": "traffic",
+    "nA": 543,
+    "nB": 257
+   },
+   {
+    "w": "next",
+    "nA": 538,
+    "nB": 250
+   },
+   {
+    "w": "place",
+    "nA": 523,
+    "nB": 250
+   },
+   {
+    "w": "work",
+    "nA": 575,
+    "nB": 245
+   },
+   {
+    "w": "hour",
+    "nA": 476,
+    "nB": 237
+   },
+   {
+    "w": "called",
+    "nA": 423,
+    "nB": 235
+   }
+  ],
+  "tokens": {
+   "A": 91919,
+   "B": 51201
+  },
+  "hidden": []
+ },
+ "charts": {
+  "heartbeat": {
+   "months": [
+    "2024-01",
+    "2024-02",
+    "2024-03",
+    "2024-04",
+    "2024-05",
+    "2024-06",
+    "2024-07",
+    "2024-08",
+    "2024-09",
+    "2024-10",
+    "2024-11",
+    "2024-12",
+    "2025-01",
+    "2025-02",
+    "2025-03",
+    "2025-04",
+    "2025-05",
+    "2025-06",
+    "2025-07",
+    "2025-08",
+    "2025-09",
+    "2025-10"
+   ],
+   "A": [
+    1288,
+    1564,
+    1441,
+    1271,
+    1264,
+    1299,
+    1345,
+    1798,
+    1337,
+    1314,
+    1194,
+    1324,
+    1344,
+    982,
+    1367,
+    1190,
+    1213,
+    1245,
+    1217,
+    1316,
+    1100,
+    1016
+   ],
+   "B": [
+    889,
+    999,
+    1026,
+    805,
+    855,
+    854,
+    937,
+    1074,
+    862,
+    876,
+    786,
+    928,
+    875,
+    698,
+    849,
+    816,
+    890,
+    879,
+    896,
+    810,
+    716,
+    633
+   ],
+   "total": [
+    2177,
+    2563,
+    2467,
+    2076,
+    2119,
+    2153,
+    2282,
+    2872,
+    2199,
+    2190,
+    1980,
+    2252,
+    2219,
+    1680,
+    2216,
+    2006,
+    2103,
+    2124,
+    2113,
+    2126,
+    1816,
+    1649
+   ]
+  },
+  "heatmap": {
+   "rows": [
+    "Mon",
+    "Tue",
+    "Wed",
+    "Thu",
+    "Fri",
+    "Sat",
+    "Sun"
+   ],
+   "cells": [
+    [
+     142,
+     556,
+     780,
+     374,
+     435,
+     0,
+     43,
+     50,
+     231,
+     486,
+     356,
+     285,
+     242,
+     130,
+     100,
+     258,
+     286,
+     457,
+     390,
+     370,
+     318,
+     151,
+     8,
+     17
+    ],
+    [
+     180,
+     378,
+     708,
+     529,
+     483,
+     0,
+     22,
+     112,
+     267,
+     392,
+     443,
+     345,
+     323,
+     202,
+     63,
+     193,
+     227,
+     461,
+     483,
+     343,
+     214,
+     134,
+     9,
+     0
+    ],
+    [
+     146,
+     535,
+     753,
+     533,
+     460,
+     0,
+     11,
+     87,
+     299,
+     415,
+     442,
+     352,
+     231,
+     146,
+     97,
+     202,
+     270,
+     433,
+     512,
+     373,
+     213,
+     154,
+     0,
+     0
+    ],
+    [
+     164,
+     551,
+     629,
+     556,
+     452,
+     0,
+     8,
+     110,
+     235,
+     482,
+     474,
+     288,
+     205,
+     132,
+     120,
+     137,
+     292,
+     624,
+     488,
+     439,
+     271,
+     101,
+     7,
+     0
+    ],
+    [
+     171,
+     584,
+     627,
+     398,
+     357,
+     0,
+     58,
+     159,
+     268,
+     535,
+     501,
+     318,
+     336,
+     277,
+     186,
+     266,
+     301,
+     482,
+     499,
+     504,
+     343,
+     254,
+     142,
+     111
+    ],
+    [
+     120,
+     440,
+     730,
+     638,
+     401,
+     0,
+     35,
+     51,
+     244,
+     453,
+     435,
+     347,
+     316,
+     144,
+     69,
+     93,
+     227,
+     471,
+     519,
+     371,
+     300,
+     141,
+     17,
+     2
+    ],
+    [
+     145,
+     490,
+     760,
+     544,
+     440,
+     0,
+     18,
+     40,
+     196,
+     538,
+     434,
+     258,
+     266,
+     149,
+     65,
+     280,
+     209,
+     575,
+     502,
+     419,
+     240,
+     148,
+     20,
+     0
+    ]
+   ]
+  },
+  "reply_hist": {
+   "labels": [
+    "<10s",
+    "10-30s",
+    "30-60s",
+    "1-2m",
+    "2-5m",
+    "5-10m",
+    "10-30m",
+    "30m-1h",
+    "1-3h",
+    "3h+"
+   ],
+   "A": [
+    142,
+    794,
+    1157,
+    1509,
+    1667,
+    717,
+    410,
+    30,
+    11,
+    0
+   ],
+   "B": [
+    96,
+    710,
+    891,
+    749,
+    376,
+    40,
+    649,
+    1605,
+    1237,
+    25
+   ]
+  },
+  "hours": {
+   "A": [
+    747,
+    2288,
+    2980,
+    2028,
+    1655,
+    0,
+    131,
+    407,
+    1151,
+    2092,
+    1695,
+    1245,
+    1117,
+    684,
+    450,
+    954,
+    1092,
+    2205,
+    1988,
+    1595,
+    1124,
+    598,
+    125,
+    78
+   ],
+   "B": [
+    321,
+    1246,
+    2007,
+    1544,
+    1373,
+    0,
+    64,
+    202,
+    589,
+    1209,
+    1390,
+    948,
+    802,
+    496,
+    250,
+    475,
+    720,
+    1298,
+    1405,
+    1224,
+    775,
+    485,
+    78,
+    52
+   ]
+  }
+ },
+ "seed": 1234
+}

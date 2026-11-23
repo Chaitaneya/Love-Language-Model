@@ -1,0 +1,10 @@
+{
+  "_note": "Approximate word counts; they vary by edition and translation. Verify before the README cites them (docs/decision.md, Spike 0). Display is always rounded and prefixed with ~. 'punch' must work for any multiple.",
+  "books": [
+    { "title": "The Great Gatsby", "unit": "Great Gatsbys", "words": 47000, "punch": "Old sport." },
+    { "title": "Harry Potter and the Philosopher's Stone", "unit": "Philosopher's Stones", "words": 77000, "punch": "Nobody asked for the sequel." },
+    { "title": "The Hobbit", "unit": "Hobbits", "words": 95000, "punch": "There and back again. Repeatedly." },
+    { "title": "The Lord of the Rings", "unit": "Lord of the Rings trilogies", "words": 480000, "punch": "At least they got a ring." },
+    { "title": "War and Peace", "unit": "War and Peaces", "words": 560000, "punch": "Tolstoy would like a word. Not another word, though." }
+  ]
+}

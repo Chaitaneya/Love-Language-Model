@@ -1,0 +1,16 @@
+{
+  "_note": "Function words only. 'nahi', 'acha', 'chalo', 'scene' are NOT here: they are the kind of word the clouds exist to surface.",
+  "words": [
+    "a", "an", "the", "i", "you", "he", "she", "it", "we", "they", "me", "my", "your", "his", "her", "our", "their",
+    "is", "are", "was", "were", "be", "been", "am", "to", "of", "in", "on", "at", "for", "with", "and", "or", "but",
+    "so", "if", "this", "that", "these", "those", "there", "here", "what", "when", "where", "who", "how", "why",
+    "do", "did", "does", "not", "no", "yes", "ok", "okay", "just", "like", "also", "too", "very", "can", "will",
+    "would", "should", "could", "have", "has", "had", "it's", "i'm", "you're", "don't", "that's", "i'll", "let's",
+    "can't", "i've", "we'll", "he's", "she's", "what's", "isn't", "didn't", "doesn't", "won't", "then", "than",
+    "as", "by", "from", "up", "out", "about", "into", "over", "again", "one", "two", "its", "them", "him", "us",
+    "haha", "lol", "hai", "ka", "ki", "ke", "ko", "se", "mein", "aur", "ye", "wo", "toh", "kya", "ho", "hain",
+    "tha", "thi", "ek", "hi", "bhi", "na", "ya", "yaar", "all", "any", "some", "more", "most", "now", "get",
+    "got", "go", "going", "know", "think", "want", "see", "say", "said", "tell", "make", "time", "well", "back",
+    "really", "still", "only", "even", "much", "many", "need", "good", "bad", "right", "thing", "things"
+  ]
+}

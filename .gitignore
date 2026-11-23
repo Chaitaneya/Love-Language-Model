@@ -1,0 +1,31 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.hypothesis/
+*.egg-info/
+build/
+dist/
+node_modules/
+web/dist/
+.DS_Store
+# real chat exports must never be committed
+*.chat.txt
+_chat.txt
+WhatsApp Chat*
+
+# web build output and generated assets
+web/dist/
+web/public/pyodide/
+web/public/wheels/
+web/public/demo/
+web/public/assets.json
+
+web/public/licenses.txt
+
+# Playwright output
+web/test-results/
+web/playwright-report/
+
+# local editor and tool settings
+.claude/

@@ -1,0 +1,21 @@
+{
+  "_note": "Matched after squashing (runs of repeated letters collapse, case folds) on both sides, so 'sorryyy' matches 'sorry'. A trailing * means 'prefix of a token' (haha* matches hahahaha). Edit freely; add a test fixture when you add a language.",
+  "apology": ["sorry", "sry", "my bad", "maaf", "maafi", "i apologize", "i apologise", "apologies", "forgive me"],
+  "i_love_you": ["i love you", "love you", "i love u", "love u", "luv u", "luv you", "i luv u", "ily", "tumse pyar", "tujhse pyar"],
+  "affection": [
+    "love you", "love u", "luv u", "luv you", "i love you", "miss you", "miss u", "missing you", "i miss you",
+    "baby", "babe", "babu", "jaan", "jaanu", "shona", "sona", "honey", "darling", "sweetheart",
+    "❤️", "❤", "🥰", "😍", "😘", "💕", "💖", "💗", "💓", "💞", "♥️", "♥"
+  ],
+  "compliment": ["cute", "pretty", "handsome", "beautiful", "gorgeous", "adorable", "stunning", "lovely", "good looking"],
+  "ping": ["??", "???", "hello?", "reply", "where are you", "kaha ho", "kahan ho", "busy?", "you there", "answer me", "pick up", "text me back"],
+  "laughter": ["haha*", "hehe*", "lol", "lmao", "lmfao", "rofl", "😂", "🤣", "😆", "😹"],
+  "goodnight": ["good night", "goodnight", "gn", "night night", "sweet dreams", "sleep well", "shubh ratri"],
+  "who_is": ["who is", "who's", "who’s", "kaun hai", "kon hai"],
+  "profanity": [
+    "damn", "wtf", "crap", "hell", "shit", "bullshit", "fuck", "fucking", "fck", "asshole", "bastard", "bitch",
+    "dick", "piss", "pissed", "bloody", "madarchod", "behenchod", "bhenchod", "chutiya", "bhosdike", "gaandu", "harami"
+  ],
+  "greetings": ["love you", "love u", "luv u", "miss you", "miss u", "good morning", "good night", "goodnight", "gn", "gm", "hi", "hey", "morning"],
+  "pet_names": ["baby", "babe", "babu", "jaan", "jaanu", "shona", "sona", "bub", "bubs", "honey", "darling", "sweetheart", "bubu", "pookie", "cutie"]
+}

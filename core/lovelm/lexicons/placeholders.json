@@ -1,0 +1,31 @@
+{
+  "_note": "Regexes (case-insensitive, matched against the WHOLE message text unless stated). Export wording varies by phone language and WhatsApp version: add entries here, plus a fixture in tests, never code. Call-line wording is a best guess and needs real samples (Spike 0).",
+  "media": [
+    { "pattern": "<?media omitted>?", "type": "media" },
+    { "pattern": "image omitted", "type": "image" },
+    { "pattern": "video omitted", "type": "video" },
+    { "pattern": "audio omitted", "type": "audio" },
+    { "pattern": "sticker omitted", "type": "sticker" },
+    { "pattern": "gif omitted", "type": "gif" },
+    { "pattern": "document omitted", "type": "document" },
+    { "pattern": "contact card omitted", "type": "contact" },
+    { "pattern": "<attached: .+>", "type": "media" },
+    { "pattern": ".+ \\(file attached\\)", "type": "media" }
+  ],
+  "deleted": [
+    "this message was deleted\\.?",
+    "you deleted this message\\.?"
+  ],
+  "call": [
+    "missed (voice|video) call",
+    "(voice|video) call, [\\d: .a-z]+"
+  ],
+  "edited_suffix": [
+    "\\s*<(this )?message (was )?edited>\\s*$"
+  ],
+  "system_in_sender": [
+    "changed (their phone number|the subject|this group|the group)",
+    "created group",
+    "security code"
+  ]
+}
