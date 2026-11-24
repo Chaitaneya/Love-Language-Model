@@ -296,7 +296,11 @@ export function posterContent(c, off = new Set()) {
 
   const items = [];
   if (run) items.push({ key: "line:run", chip: `${int(run.n)} in a row`, text: `${c.name(run.win)} sent ${int(run.n)} messages in a row.` });
-  if (ily) items.push({ key: "line:ily", chip: "“I love you” first", text: `${c.name(ily.win)} said “I love you” first.` });
+  // The second line is about the other person, so the poster says something about both of you.
+  const other = run ? c.other(run.win) : null;
+  if (ily && (!run || ily.win === other)) items.push({ key: "line:ily", chip: "“I love you” first", text: `${c.name(ily.win)} said “I love you” first.` });
+  else if (run && run.q) items.push({ key: "line:reply", chip: "The reply", text: `${c.name(other)} replied “${run.q}”.` });
+  else items.push({ key: "line:both", chip: "Together", text: `Together: ${int(c.data.meta.messages)} messages.` });
 
   return {
     kind: "poster",

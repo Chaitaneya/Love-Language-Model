@@ -189,3 +189,9 @@ test("the busiest hour: the real 24 hours, the peak, and lines you can leave off
   assert.equal(hourContent(ctx(none)), null);
 });
 
+test("the poster's two lines are about both people, never two facts about one", () => {
+  const same = withStat("first_ily", { win: "A", W: "Rohan", L: "Tara" }); // Rohan has the run AND said it first
+  assert.deepEqual(posterContent(ctx(same)).lines, ["Rohan sent 31 messages in a row.", "Tara replied “hmm”."]);
+  assert.deepEqual(posterContent(ctx()).lines, ["Rohan sent 31 messages in a row.", "Tara said “I love you” first."]);
+});
+
