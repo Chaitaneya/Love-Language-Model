@@ -58,7 +58,10 @@ jobs:
       - name: Smoke test (Pyodide in Node equals native CPython)
         working-directory: web
         run: npm run smoke
-      - name: Browser tests against the production build, in Google Chrome (preinstalled on the runner)
+      - name: Install the browser for the tests
+        working-directory: web
+        run: npx playwright install --with-deps chromium
+      - name: Browser tests against the production build
         working-directory: web
         run: npm run e2e
       - name: Keep the browser traces when something failed
