@@ -1,15 +1,24 @@
-# Love Language Model
+<h1 align="center">Love Language Model</h1>
 
-> Not an LLM. It just counts things, very judgmentally.
+<p align="center"><em>Not an LLM. It just counts things, very judgmentally.</em></p>
 
-[![CI](https://github.com/Chaitaneya/Love-Language-Model/actions/workflows/ci.yml/badge.svg)](https://github.com/Chaitaneya/Love-Language-Model/actions/workflows/ci.yml)
-![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-3776AB)
-![No server](https://img.shields.io/badge/server-none-2b2622)
-![Licence MIT](https://img.shields.io/badge/licence-MIT-ece4d6)
+<p align="center">
+  <a href="https://chaitaneya.github.io/Love-Language-Model/"><b>▶ Try it live</b></a>
+  &nbsp;·&nbsp; <a href="#privacy-you-can-check">Privacy you can check</a>
+  &nbsp;·&nbsp; <a href="#how-it-works">How it works</a>
+</p>
 
-**Drop in a WhatsApp chat and get a movie poster of your relationship**, made from true moments in it: the first message, who replies in 23 minutes, the 31 messages in a row and the "hmm" that answered them.
+<p align="center">
+  <a href="https://github.com/Chaitaneya/Love-Language-Model/actions/workflows/ci.yml"><img src="https://github.com/Chaitaneya/Love-Language-Model/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <img src="https://img.shields.io/badge/python-3.11%2B-3776AB" alt="Python 3.11+">
+  <img src="https://img.shields.io/badge/server-none-2b2622" alt="No server">
+  <img src="https://img.shields.io/badge/tests-590%2B-B8322A" alt="590+ tests">
+  <img src="https://img.shields.io/badge/licence-MIT-ece4d6" alt="Licence MIT">
+</p>
 
-The counting runs **inside your browser** (Python compiled to WebAssembly), so the chat never leaves the tab. There is no server to send it to and no database to keep it in.
+> **Your WhatsApp chat, made into a movie poster.** Who texts first. Who replies in 23 minutes. Who sent 31 messages in a row and got *"hmm"* back. Every line is a real number from your chat, and the chat never leaves your phone: the counting runs inside the browser, in Python compiled to WebAssembly. No server. No database. Nothing uploaded.
+
+**[Open the app →](https://chaitaneya.github.io/Love-Language-Model/)** Tap *"Try it with a demo couple"* if you don't have a chat export handy.
 
 <p align="center">
   <img src="docs/img/demo.gif" alt="A phone-sized tour of the app: the landing page, confirming the names, six highlights one per screen, the four cards, and the sheet that explains how each number was counted" width="30%">
