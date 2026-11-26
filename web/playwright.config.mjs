@@ -9,6 +9,6 @@ export default defineConfig({
   workers: 1,
   retries: 0,
   reporter: [["list"]],
-  use: { baseURL: "http://localhost:4173", channel: process.env.CI ? undefined : "chrome", // CI uses Playwright's own Chromium (installed in ci.yml) headless: true, viewport: { width: 1100, height: 900 } },
+  use: { baseURL: "http://localhost:4173", channel: process.env.CI ? undefined : "chrome" /* CI: Playwright's own Chromium */, headless: true, viewport: { width: 1100, height: 900 } },
   webServer: { command: "npm run build && npm run preview", url: "http://localhost:4173", reuseExistingServer: true, timeout: 240_000 },
 });
